@@ -39,8 +39,6 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
             Debug.Log("Начинается инициализация сервисов");
 
             yield return container.Resolve<ConfigsProviderService>().LoadAsync();
-
-
             yield return new WaitForSeconds(1.0f);
 
             Debug.Log("Завершается инициализация сервисов");
