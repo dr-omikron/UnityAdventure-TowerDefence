@@ -4,6 +4,7 @@ using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Meta.Features.Wallet;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
+using _Project.Develop.Runtime.Utilities.DataManagement.DataProviders;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace _Project.Develop.Runtime.Meta.Infrastructure
     {
         private DIContainer _container;
         private WalletService _walletService;
+
+        private PlayerDataProvider _playerDataProvider;
         private ICoroutinesPerformer _coroutinesPerformer;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
@@ -26,6 +29,7 @@ namespace _Project.Develop.Runtime.Meta.Infrastructure
             Debug.Log("MainMenu Scene Initialized");
 
             _walletService = _container.Resolve<WalletService>();
+            _playerDataProvider = _container.Resolve<PlayerDataProvider>();
             _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
 
             yield break;
@@ -57,6 +61,12 @@ namespace _Project.Develop.Runtime.Meta.Infrastructure
                     _walletService.Spend(CurrencyType.Gold, 10);
 
                 Debug.Log("Золота осталось " + _walletService.GetCurrency(CurrencyType.Gold).Value);
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync());
+                Debug.Log("Данные сохранены");
             }
         }
     }
