@@ -1,0 +1,45 @@
+﻿using System;
+using _Project.Develop.Runtime.UI.Core;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace _Project.Develop.Runtime.UI.Gameplay.ResultPopups
+{
+    public class DefeatPopupView : PopupViewBase
+    {
+        public event Action ContinueClicked;
+        public event Action RestartClicked;
+        
+        [SerializeField] private TMP_Text _title;
+        [SerializeField] private Button _continueButton;
+        [SerializeField] private Button _restartButton;
+
+        public void SetTitle(string title) => _title.text = title;
+
+        protected override void OnPreShow()
+        {
+            base.OnPreShow();
+            
+            _continueButton.onClick.AddListener(OnContinueButtonClicked);
+            _restartButton.onClick.AddListener(OnRestartButtonClicked);
+        }
+
+        protected override void OnPreHide()
+        {
+            base.OnPreHide();
+
+            _continueButton.onClick.RemoveListener(OnContinueButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        }
+
+        private void OnDisable()
+        {
+            _continueButton.onClick.RemoveListener(OnContinueButtonClicked);
+            _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        }
+
+        private void OnContinueButtonClicked() => ContinueClicked?.Invoke();
+        private void OnRestartButtonClicked() => RestartClicked?.Invoke();
+    }
+}
