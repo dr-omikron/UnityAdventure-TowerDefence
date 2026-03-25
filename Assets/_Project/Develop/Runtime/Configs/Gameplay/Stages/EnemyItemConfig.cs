@@ -7,6 +7,7 @@ namespace _Project.Develop.Runtime.Configs.Gameplay.Stages
 
     public class EnemyItemConfig
     {
+        //[field: SerializeField] public EnemyConfig
         [field: SerializeField] public Vector3 SpawnPosition { get; private set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using _Project.Develop.Runtime.Gameplay.Features.AI;
 using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
@@ -12,6 +13,18 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
     {
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
+
+        //Проверить GameplayContextRegistration при необходимости убрать ненужные сервисы из проекта
+
+        //private AIBrainContext _aiBrainContext;
+        //_aiBrainContext - реализовать при наличии ai логики.
+
+        //private GameplayStatesContext _gameplayStatesContext;
+        //_gameplayStatesContext - не содержит логики. Реализовать когда будет необходимость в игровом цикле,
+        //для создания и тестирования механик пока используется TestGameplay
+
+
+        [SerializeField] private TestGameplay _testGameplay;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -30,16 +43,28 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             Debug.Log("Loaded level number: " + _inputArgs.LevelNumber);
             Debug.Log("Gameplay Scene Initialized");
 
+            _testGameplay.Initialize(_container);
+
+            //_aiBrainContext = _container.Resolve<AIBrainContext>();
+            //_gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
+
             yield break;
         }
 
         public override void Run()
         {
             Debug.Log("Gameplay Scene Started");
+
+            _testGameplay.Run();
+
+            //_gameplayStatesContext.Run();
         }
 
         private void Update()
         {
+            //_aiBrainContext?.Update(Time.deltaTime);
+            //_gameplayStatesContext?.Update(Time.deltaTime);
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
