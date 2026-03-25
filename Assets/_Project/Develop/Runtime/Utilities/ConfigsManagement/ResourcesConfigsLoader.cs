@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Develop.Runtime.Configs.Gameplay.Levels;
 using _Project.Develop.Runtime.Configs.Meta.Wallet;
 using _Project.Develop.Runtime.Utilities.AssetsManagement;
 using UnityEngine;
@@ -14,7 +15,8 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
         private readonly Dictionary<Type, string> _configsResourcesPaths = new Dictionary<Type, string>
         {
             {typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig"},
-            {typeof(CurrencyIconConfig), "Configs/Meta/Wallet/CurrencyIconConfig"}
+            {typeof(CurrencyIconConfig), "Configs/Meta/Wallet/CurrencyIconConfig"},
+            {typeof(LevelsListConfig), "Configs/Gameplay/Levels/LevelsListConfig"}
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resourcesAssetsLoader)

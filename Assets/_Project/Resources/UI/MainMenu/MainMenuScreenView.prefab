@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2983900877433771572}
   - component: {fileID: 7845623196045361355}
   m_Layer: 0
-  m_Name: ButtonOpenTestPopup
+  m_Name: ButtonLevelsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OPEN TEST POPUP
+  m_text: OPEN LEVELS MENU
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

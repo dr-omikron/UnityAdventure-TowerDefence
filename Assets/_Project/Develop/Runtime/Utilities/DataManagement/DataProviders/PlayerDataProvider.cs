@@ -22,6 +22,7 @@ namespace _Project.Develop.Runtime.Utilities.DataManagement.DataProviders
             return new PlayerData
             {
                 WalletData = InitWalletData(),
+                CompletedLevels = new List<int>()
             };
         }
 

@@ -66,7 +66,7 @@ MonoBehaviour:
   _mainGroup: {fileID: 729290372310613780}
   _antiClicker: {fileID: 8935307069774366867}
   _body: {fileID: 5600215687576866064}
-  _animationType: 2
+  _animationType: 1
   _text: {fileID: 7889020911713473892}
 --- !u!1 &3517926358850139787
 GameObject:
