@@ -62,7 +62,7 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
             Debug.Log("Завершается инициализация сервисов");
             loadingScreen.Hide();
 
-            yield return sceneSwitcherService.ProcessSwitchTo(/*Scenes.MainMenu*/ Scenes.Gameplay, new GameplayInputArgs(1));
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
         }
     }
 }
