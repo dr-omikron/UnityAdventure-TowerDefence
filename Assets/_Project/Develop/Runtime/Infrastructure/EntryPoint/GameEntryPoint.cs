@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using _Project.Develop.Runtime.Gameplay.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
@@ -56,7 +57,7 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
             Debug.Log("Завершается инициализация сервисов");
             loadingScreen.Hide();
 
-            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, new GameplayInputArgs(1));
         }
     }
 }

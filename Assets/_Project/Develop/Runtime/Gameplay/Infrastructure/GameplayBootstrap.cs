@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using _Project.Develop.Runtime.Gameplay.Features.AI;
+using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
@@ -13,6 +13,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
     {
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
+        private EntitiesLifeContext _entitiesLifeContext;
 
         [SerializeField] private TestGameplay _testGameplay;
 
@@ -35,6 +36,8 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
             _testGameplay.Initialize(_container);
 
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+
             //_aiBrainContext = _container.Resolve<AIBrainContext>();
             //_gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
 
@@ -52,6 +55,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
         private void Update()
         {
+            _entitiesLifeContext.Update(Time.deltaTime);
             //_aiBrainContext?.Update(Time.deltaTime);
             //_gameplayStatesContext?.Update(Time.deltaTime);
 
