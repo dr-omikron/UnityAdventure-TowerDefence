@@ -14,16 +14,6 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
 
-        //Проверить GameplayContextRegistration при необходимости убрать ненужные сервисы из проекта
-
-        //private AIBrainContext _aiBrainContext;
-        //_aiBrainContext - реализовать при наличии ai логики.
-
-        //private GameplayStatesContext _gameplayStatesContext;
-        //_gameplayStatesContext - не содержит логики. Реализовать когда будет необходимость в игровом цикле,
-        //для создания и тестирования механик пока используется TestGameplay
-
-
         [SerializeField] private TestGameplay _testGameplay;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)

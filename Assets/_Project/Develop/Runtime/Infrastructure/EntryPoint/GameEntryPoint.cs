@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using _Project.Develop.Runtime.Gameplay.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
@@ -14,11 +13,6 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
     {
         private void Awake()
         {
-            //Данный проект шаблонный
-            //В проект включен часто используемые сервисы и утилиты
-            //Найти и чтобы при необходимости убрать сервисы проще всего в классах где происходит их регистрации:
-            //ProjectContextRegistration, MainMenuContextRegistration, GameplayContextRegistration
-
             Debug.Log("Старт проекта, сетап настроек");
             SetupAppSettings();
 

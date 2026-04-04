@@ -18,8 +18,6 @@ namespace _Project.Develop.Runtime.Meta.Infrastructure
         private PlayerDataProvider _playerDataProvider;
         private ICoroutinesPerformer _coroutinesPerformer;
 
-        //Проверить MainMenuContextRegistration при необходимости убрать ненужные сервисы из проекта
-
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
             _container = container;
