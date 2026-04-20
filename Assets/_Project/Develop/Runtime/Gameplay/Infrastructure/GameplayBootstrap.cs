@@ -55,7 +55,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
         private void Update()
         {
-            _entitiesLifeContext.Update(Time.deltaTime);
+            _entitiesLifeContext?.Update(Time.deltaTime);
             //_aiBrainContext?.Update(Time.deltaTime);
             //_gameplayStatesContext?.Update(Time.deltaTime);
 
