@@ -3,11 +3,15 @@ using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using _Project.Develop.Runtime.Gameplay.Features.AI;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Sensors;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Station;
 using _Project.Develop.Runtime.Gameplay.States;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.AssetsManagement;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
+using _Project.Develop.Runtime.Utilities.Physic;
+using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 {
@@ -29,6 +33,10 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEntitiesFactory);
             container.RegisterAsSingle(CreateEntitiesLifeContext);
             container.RegisterAsSingle(CreateMonoEntityFactory).NonLazy();
+            container.RegisterAsSingle(CreateColliderRegistryService);
+            container.RegisterAsSingle(CreateScreenToWorldPointRaycastService);
+            container.RegisterAsSingle(CreateContactsEntitiesFilter);
+            container.RegisterAsSingle(CreateStationHolderService).NonLazy();
         }
 
         private static DesktopInput CreateDesktopInput(DIContainer c)
@@ -65,7 +73,20 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
         {
             return new MonoEntityFactory(
                 c.Resolve<ResourcesAssetsLoader>(),
-                c.Resolve<EntitiesLifeContext>());
+                c.Resolve<EntitiesLifeContext>(),
+                c.Resolve<ColliderRegistryService>());
         }
+
+        private static ColliderRegistryService CreateColliderRegistryService(DIContainer c)
+            => new ColliderRegistryService();
+
+        private static ScreenToWorldPointRaycastService CreateScreenToWorldPointRaycastService(DIContainer c)
+            => new ScreenToWorldPointRaycastService(c.Resolve<IInputService>());
+
+        private static ContactsEntitiesFilterService CreateContactsEntitiesFilter(DIContainer c)
+            => new ContactsEntitiesFilterService(c.Resolve<ColliderRegistryService>());
+        
+        private static StationHolderService CreateStationHolderService(DIContainer c)
+            => new StationHolderService(c.Resolve<EntitiesLifeContext>());
     }
 }

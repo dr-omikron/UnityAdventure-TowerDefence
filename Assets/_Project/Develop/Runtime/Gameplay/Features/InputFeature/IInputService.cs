@@ -1,9 +1,11 @@
-﻿namespace _Project.Develop.Runtime.Gameplay.Features.InputFeature
+﻿using UnityEngine;
+
+namespace _Project.Develop.Runtime.Gameplay.Features.InputFeature
 {
     public interface IInputService
     {
         bool IsEnabled { get; set; }
-
-        //Vector3 Direction { get; }
+        bool IsClicked { get; }
+        Vector3 ScreenPosition { get; }
     }
 }
