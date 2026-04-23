@@ -9,8 +9,8 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
         public ReactiveVariable<float> Value;
     }
 
-    public class ShootPoint : IEntityComponent
+    public class ShootPoints : IEntityComponent
     {
-        public Transform Value;
+        public Transform[] Value;
     }
 }

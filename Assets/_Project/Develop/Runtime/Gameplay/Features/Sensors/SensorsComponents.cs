@@ -54,4 +54,14 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Sensors
     {
         public ReactiveEvent<Vector3> Value;
     }
+
+    public class DeathMask : IEntityComponent
+    {
+        public LayerMask Value;
+    }
+
+    public class IsTouchingDeathMask : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+    }
 }

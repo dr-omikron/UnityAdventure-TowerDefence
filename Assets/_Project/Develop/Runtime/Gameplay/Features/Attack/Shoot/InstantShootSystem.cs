@@ -8,29 +8,35 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
 {
     public class InstantShootSystem : IInitializableSystem, IDisposableSystem
     {
+        private readonly EntitiesFactory _entitiesFactory;
         private ReactiveEvent _startAttackEvent;
         private ReactiveVariable<float> _damage;
-        private Transform _shootPoint;
+        private Transform[] _shootPoints;
 
         private IDisposable _startAttackEventDisposable;
+
+        public InstantShootSystem(EntitiesFactory entitiesFactory)
+        {
+            _entitiesFactory = entitiesFactory;
+        }
 
         public void OnInit(Entity entity)
         {
             _startAttackEvent = entity.StartAttackEvent;
             _damage = entity.ShootAttackDamage;
-            _shootPoint = entity.ShootPoint;
+            _shootPoints = entity.ShootPoints;
 
             _startAttackEventDisposable = _startAttackEvent.Subscribe(OnStartAttackEvent);
         }
 
         private void OnStartAttackEvent()
         {
-            Debug.Log($"Shoot - damage: {_damage.Value}");
+            foreach (var point in _shootPoints)
+                _entitiesFactory.CreateProjectile(point.position, point.forward, _damage.Value);
         }
 
-        public void OnDispose()
-        {
-            _startAttackEventDisposable.Dispose();
-        }
+        public void OnDispose() => _startAttackEventDisposable.Dispose();
     }
 }
+
+
