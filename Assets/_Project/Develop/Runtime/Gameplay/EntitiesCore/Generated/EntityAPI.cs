@@ -1012,6 +1012,30 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.Attack.InAttackCooldown {Value = value});
 		}
 
+		public _Project.Develop.Runtime.Gameplay.Features.Attack.StartAttackDistance StartAttackDistanceC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.Attack.StartAttackDistance>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> StartAttackDistance => StartAttackDistanceC.Value;
+
+		public bool TryGetStartAttackDistance(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.Attack.StartAttackDistance component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddStartAttackDistance()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.Attack.StartAttackDistance { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddStartAttackDistance(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.Attack.StartAttackDistance {Value = value});
+		}
+
 		public _Project.Develop.Runtime.Gameplay.Features.Attack.Shoot.ShootAttackDamage ShootAttackDamageC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.Attack.Shoot.ShootAttackDamage>();
 
 		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> ShootAttackDamage => ShootAttackDamageC.Value;
@@ -1146,6 +1170,30 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.ApplyDamage.CanApplyDamage {Value = value});
 		}
 
+		public _Project.Develop.Runtime.Gameplay.Features.AI.CurrentTarget CurrentTargetC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.AI.CurrentTarget>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.EntitiesCore.Entity> CurrentTarget => CurrentTargetC.Value;
+
+		public bool TryGetCurrentTarget(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.EntitiesCore.Entity> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.AI.CurrentTarget component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.EntitiesCore.Entity>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddCurrentTarget()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.AI.CurrentTarget { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.EntitiesCore.Entity>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddCurrentTarget(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.EntitiesCore.Entity> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.AI.CurrentTarget {Value = value});
+		}
+
 		public _Project.Develop.Runtime.Gameplay.Common.RigidbodyComponent RigidbodyC => GetComponent<_Project.Develop.Runtime.Gameplay.Common.RigidbodyComponent>();
 
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;
@@ -1163,6 +1211,25 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
 		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddRigidbody(UnityEngine.Rigidbody value)
 		{
 			return AddComponent(new _Project.Develop.Runtime.Gameplay.Common.RigidbodyComponent {Value = value});
+		}
+
+		public _Project.Develop.Runtime.Gameplay.Common.TransformComponent TransformC => GetComponent<_Project.Develop.Runtime.Gameplay.Common.TransformComponent>();
+
+		public UnityEngine.Transform Transform => TransformC.Value;
+
+		public bool TryGetTransform(out UnityEngine.Transform value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Common.TransformComponent component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(UnityEngine.Transform);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTransform(UnityEngine.Transform value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Common.TransformComponent {Value = value});
 		}
 
 	}

@@ -79,4 +79,9 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Attack
     {
         public ReactiveVariable<bool> Value;
     }
+
+    public class StartAttackDistance : IEntityComponent
+    {
+        public ReactiveVariable<float> Value;
+    }
 }

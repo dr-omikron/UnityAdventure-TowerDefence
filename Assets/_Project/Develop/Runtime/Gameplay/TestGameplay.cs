@@ -1,7 +1,9 @@
 ﻿using _Project.Develop.Runtime.Gameplay.EntitiesCore;
+using _Project.Develop.Runtime.Gameplay.Features.AI;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.Physic;
+using _Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay
@@ -10,6 +12,7 @@ namespace _Project.Develop.Runtime.Gameplay
     {
         private DIContainer _container;
         private EntitiesFactory _entitiesFactory;
+        private BrainsFactory _brainsFactory;
         private Entity _simpleEnemy;
         private Entity _station;
         private Entity _shootingEnemy;
@@ -22,6 +25,7 @@ namespace _Project.Develop.Runtime.Gameplay
         {
             _container = container;
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
+            _brainsFactory = _container.Resolve<BrainsFactory>();
             _inputService = _container.Resolve<IInputService>();
             _screenToWorldPointRaycastService = _container.Resolve<ScreenToWorldPointRaycastService>();
         }
@@ -30,9 +34,9 @@ namespace _Project.Develop.Runtime.Gameplay
         {
             _isRunning = true;
             _station = _entitiesFactory.CreateStation();
-            _simpleEnemy = _entitiesFactory.CreateSimpleEnemy(Vector3.right * 50);
-            _shootingEnemy = _entitiesFactory.CreateShootingEnemy(Vector3.left * 50);
-            Entity simpleEnemy2 = _entitiesFactory.CreateSimpleEnemy(Vector3.forward * 50);
+            _simpleEnemy = _entitiesFactory.CreateSimpleEnemy(Vector3.right * 50, new ReactiveVariable<Entity>(_station));
+            _shootingEnemy = _entitiesFactory.CreateShootingEnemy(Vector3.left * 100, new ReactiveVariable<Entity>(_station));
+            Entity simpleEnemy2 = _entitiesFactory.CreateSimpleEnemy(Vector3.forward * 50, new ReactiveVariable<Entity>(_station));
         }
 
         private void Update()
@@ -52,10 +56,16 @@ namespace _Project.Develop.Runtime.Gameplay
                     _station.StartAreaAttackRequest.Invoke(hit.point);
             }
 
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                //_brainsFactory.CreateSimpleEnemyBrain(_simpleEnemy);
+                _brainsFactory.CreateShootingEnemyBrain(_shootingEnemy);
+            }
 
-            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+            /*Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             _simpleEnemy.MoveDirection.Value = input;
-            _simpleEnemy.RotationDirection.Value = input;
+            _simpleEnemy.RotationDirection.Value = input;*/
         }
     }
 }

@@ -124,13 +124,14 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateSimpleEnemy(Vector3 position)
+        public Entity CreateSimpleEnemy(Vector3 position, ReactiveVariable<Entity> currentTarget)
         {
             Entity entity = CreateEmpty();
 
             _monoEntityFactory.Create(entity, position, "Entities/SimpleEnemy");
 
             entity
+                .AddCurrentTarget(currentTarget)
                 .AddIsMoving()
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
                 .AddMoveSpeed(new ReactiveVariable<float>(50))
@@ -142,6 +143,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddIsDeathProcess()
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
                 .AddDeathProcessCurrentTime()
+                .AddStartAttackDistance(new ReactiveVariable<float>(5))
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
                 .AddContactDetectingMask(1 << LayerMask.NameToLayer("Entity"))
@@ -189,13 +191,14 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateShootingEnemy(Vector3 position)
+        public Entity CreateShootingEnemy(Vector3 position, ReactiveVariable<Entity> currentTarget)
         {
             Entity entity = CreateEmpty();
 
             _monoEntityFactory.Create(entity, position, "Entities/ShootingEnemy");
 
             entity
+                .AddCurrentTarget(currentTarget)
                 .AddIsMoving()
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
                 .AddMoveSpeed(new ReactiveVariable<float>(50))
@@ -214,6 +217,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddInAttackCooldown()
 
                 .AddShootAttackDamage(new ReactiveVariable<float>(25))
+                .AddStartAttackDistance(new ReactiveVariable<float>(50))
 
                 .AddMaxHealth(new ReactiveVariable<float>(100))
                 .AddCurrentHealth(new ReactiveVariable<float>(100))
