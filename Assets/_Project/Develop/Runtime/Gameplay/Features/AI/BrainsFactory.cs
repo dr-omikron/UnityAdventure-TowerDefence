@@ -72,19 +72,22 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
         {
             RotateToTargetState rotateToTargetState = new RotateToTargetState(entity);
             MovementToRotationDirectionState movementToRotationDirectionState = new MovementToRotationDirectionState(entity);
+            EmptyState emptyState = new EmptyState();
 
             Entity target = entity.CurrentTarget.Value;
             Transform transform = entity.Transform;
 
-            ICompositeCondition fromRotateToMovementState = new CompositeCondition()
-                .Add(new FuncCondition(() => IsLookingToTarget(target, transform)));
+            ICondition fromRotateToMovementState = new FuncCondition(() => IsLookingToTarget(target, transform));
+            ICondition fromMovementToEmptyState = new FuncCondition(() => target.IsInit == false);
 
             AIStateMachine stateMachine = new AIStateMachine();
 
             stateMachine.AddState(rotateToTargetState);
             stateMachine.AddState(movementToRotationDirectionState);
+            stateMachine.AddState(emptyState);
 
             stateMachine.AddTransition(rotateToTargetState, movementToRotationDirectionState, fromRotateToMovementState);
+            stateMachine.AddTransition(movementToRotationDirectionState, emptyState, fromMovementToEmptyState);
 
             return stateMachine;
         }

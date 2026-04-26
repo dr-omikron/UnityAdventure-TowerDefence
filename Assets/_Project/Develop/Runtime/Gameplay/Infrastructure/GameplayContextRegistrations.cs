@@ -2,6 +2,7 @@
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using _Project.Develop.Runtime.Gameplay.Features.AI;
+using _Project.Develop.Runtime.Gameplay.Features.Enemies;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Sensors;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
@@ -37,6 +38,8 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateScreenToWorldPointRaycastService);
             container.RegisterAsSingle(CreateContactsEntitiesFilter);
             container.RegisterAsSingle(CreateStationHolderService).NonLazy();
+            container.RegisterAsSingle(CreateStationFactory);
+            container.RegisterAsSingle(CreateEnemiesFactory);
         }
 
         private static DesktopInput CreateDesktopInput(DIContainer c)
@@ -85,8 +88,14 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
         private static ContactsEntitiesFilterService CreateContactsEntitiesFilter(DIContainer c)
             => new ContactsEntitiesFilterService(c.Resolve<ColliderRegistryService>());
-        
+
         private static StationHolderService CreateStationHolderService(DIContainer c)
             => new StationHolderService(c.Resolve<EntitiesLifeContext>());
+
+        private static StationFactory CreateStationFactory(DIContainer c)
+            => new StationFactory(c);
+
+        private static EnemiesFactory CreateEnemiesFactory(DIContainer c)
+        => new EnemiesFactory(c);
     }
 }

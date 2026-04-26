@@ -617,6 +617,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f817c23d9e449afa5a14b88a1005f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelConfig: {fileID: 11400000, guid: cb60940299004de47890e8cd36ab7ba2, type: 2}
+  _stationConfig: {fileID: 11400000, guid: ab1fb3d7c14db4a4a92a6d16bbcae9c9, type: 2}
+  _simpleEnemyConfig: {fileID: 11400000, guid: b03de8e922bced143baddb206cd18714, type: 2}
+  _shootingEnemyConfig: {fileID: 11400000, guid: 66c11b4bc01d7474ca6ca491e019fe45,
+    type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

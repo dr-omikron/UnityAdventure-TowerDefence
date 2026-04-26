@@ -2,6 +2,30 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
 {
 	public partial class Entity
 	{
+		public _Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Team TeamC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Team>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Teams> Team => TeamC.Value;
+
+		public bool TryGetTeam(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Teams> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Team component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Teams>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeam()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Team { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Teams>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddTeam(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<_Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Teams> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.TeamsFeature.Team {Value = value});
+		}
+
 		public _Project.Develop.Runtime.Gameplay.Features.Station.IsStation IsStationC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.Station.IsStation>();
 
 		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Boolean> IsStation => IsStationC.Value;
