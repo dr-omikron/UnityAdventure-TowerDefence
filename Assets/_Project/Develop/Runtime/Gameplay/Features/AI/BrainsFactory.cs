@@ -30,9 +30,9 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
 
         public StateMachineBrain CreateTurretBrain(Entity entity, ITargetSelector targetSelector)
         {
-            AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
-            
             FindTargetState findTargetState = new FindTargetState(entity, targetSelector, _entitiesLifeContext);
+            AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
+
             AIParallelState parallelState = new AIParallelState(findTargetState, combatState);
 
             AIStateMachine rootStateMachine = new AIStateMachine();
@@ -49,11 +49,18 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
             AIStateMachine movementState = CreateMovementToTargetStateMachine(entity);
             AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
 
-            Entity target = entity.CurrentTarget.Value;
+            ReactiveVariable<Entity> target = entity.CurrentTarget;
             Transform transform = entity.Transform;
             ReactiveVariable<float> startAttackDistance = entity.StartAttackDistance;
 
-            ICondition fromMovementToCombatState = new FuncCondition(() => IsAttackDistanceReached(target, transform, startAttackDistance.Value));
+            ICondition fromMovementToCombatState = new FuncCondition(() =>
+            {
+                if (target.Value == null)
+                    return false;
+
+                float distance = (transform.position - target.Value.Transform.position).magnitude;
+                return distance <= startAttackDistance.Value;
+            });
 
             AIStateMachine behaviour = new AIStateMachine();
 
@@ -74,11 +81,20 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
             MovementToRotationDirectionState movementToRotationDirectionState = new MovementToRotationDirectionState(entity);
             EmptyState emptyState = new EmptyState();
 
-            Entity target = entity.CurrentTarget.Value;
+            ReactiveVariable<Entity> target = entity.CurrentTarget;
             Transform transform = entity.Transform;
 
-            ICondition fromRotateToMovementState = new FuncCondition(() => IsLookingToTarget(target, transform));
-            ICondition fromMovementToEmptyState = new FuncCondition(() => target.IsInit == false);
+            ICondition fromRotateToMovementState = new FuncCondition(() =>
+            {
+                if (target.Value == null)
+                    return false;
+
+                float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Value.Transform.position - transform.position));
+
+                return angleToTarget <= 3f;
+            });
+
+            ICondition fromMovementToEmptyState = new FuncCondition(() => target == null);
 
             AIStateMachine stateMachine = new AIStateMachine();
 
@@ -97,14 +113,22 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
             RotateToTargetState rotateToTargetState = new RotateToTargetState(entity);
             AttackTriggerState attackTriggerState = new AttackTriggerState(entity);
 
-            Entity target = entity.CurrentTarget.Value;
+            ReactiveVariable<Entity> target = entity.CurrentTarget;
             Transform transform = entity.Transform;
 
             ICondition canAttack = entity.CanStartAttack;
 
             ICompositeCondition fromRotateToAttackCondition = new CompositeCondition()
                 .Add(canAttack)
-                .Add(new FuncCondition(() => IsLookingToTarget(target, transform)));
+                .Add(new FuncCondition(() =>
+                {
+                    if (target.Value == null)
+                        return false;
+
+                    float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Value.Transform.position - transform.position));
+
+                    return angleToTarget <= 3f;
+                }));
 
             ReactiveVariable<bool> inAttackProcess = entity.InAttackProcess;
             ICondition fromAttackToRotateCondition = new FuncCondition(() => inAttackProcess.Value == false);
@@ -118,25 +142,6 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
             stateMachine.AddTransition(attackTriggerState, rotateToTargetState, fromAttackToRotateCondition);
 
             return stateMachine;
-        }
-
-        private bool IsLookingToTarget(Entity target, Transform transform)
-        {
-            if (target == null || target.Transform == null)
-                return false;
-
-            float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Transform.position - transform.position));
-
-            return angleToTarget <= 3f;
-        }
-
-        private bool IsAttackDistanceReached(Entity target, Transform transform, float attackDistance)
-        {
-            if (target == null)
-                return false;
-
-            float distance = (transform.position - target.Transform.position).magnitude;
-            return distance <= attackDistance;
         }
     }
 }

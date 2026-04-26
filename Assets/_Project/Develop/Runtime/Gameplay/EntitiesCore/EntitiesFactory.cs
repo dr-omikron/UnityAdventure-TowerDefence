@@ -10,6 +10,7 @@ using _Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using _Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using _Project.Develop.Runtime.Gameplay.Features.MovementFeatures;
 using _Project.Develop.Runtime.Gameplay.Features.Sensors;
+using _Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities;
 using _Project.Develop.Runtime.Utilities.Conditions;
@@ -50,7 +51,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
 
-                .AddContactDetectingMask(Layers.EntityMask | Layers.EnemyMask)
+                .AddContactDetectingMask(Layers.EntityMask)
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                 .AddBodyContactDamage(new ReactiveVariable<float>(1000))
@@ -69,7 +70,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddCastAreaPositionEvent()
                 .AddEndCastAreaPositionEvent()
                 .AddAreaDetectingRadius(new ReactiveVariable<float>(stationConfig.AreaDamageRadius))
-                .AddAreaDetectingMask( Layers.EnemyMask)
+                .AddAreaDetectingMask(Layers.EntityMask)
                 .AddAreaCollidersBuffer(new Buffer<Collider>(64))
                 .AddAreaEntitiesBuffer(new Buffer<Entity>(64))
                 .AddAreaDamage(new ReactiveVariable<float>(stationConfig.AreaDamage));
@@ -281,7 +282,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateProjectile(Vector3 position, Vector3 direction, float damage)
+        public Entity CreateProjectile(Vector3 position, Vector3 direction, float damage, Entity owner)
         {
             Entity entity = CreateEmpty();
 
@@ -294,12 +295,14 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddRotationDirection(new ReactiveVariable<Vector3>(direction))
                 .AddRotationSpeed(new ReactiveVariable<float>(9999))
                 .AddIsDead()
-                .AddContactDetectingMask(Layers.EntityMask)
+                .AddContactDetectingMask(Layers.EntityMask | Layers.Environment)
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                 .AddBodyContactDamage(new ReactiveVariable<float>(damage))
-                .AddDeathMask(Layers.EntityMask)
-                .AddIsTouchingDeathMask();
+                .AddDeathMask(Layers.Environment)
+                .AddIsTouchingDeathMask()
+                .AddIsTouchAnotherTeam()
+                .AddTeam(new ReactiveVariable<Teams>(owner.Team.Value));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -307,8 +310,9 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             ICompositeCondition canRotate = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
-            ICompositeCondition mustDie = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsTouchingDeathMask.Value));
+            ICompositeCondition mustDie = new CompositeCondition(LogicOperations.Or)
+                .Add(new FuncCondition(() => entity.IsTouchingDeathMask.Value))
+                .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value));
 
             ICompositeCondition mustSelfRelease = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value));
@@ -326,6 +330,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new BodyContactsEntitiesFilterSystem(_contactsEntitiesFilterService))
                 .AddSystem(new DealDamageOnContactSystem())
                 .AddSystem(new DeathMaskTouchDetectorSystem())
+                .AddSystem(new AnotherTeamTouchDetectorSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
@@ -342,9 +347,9 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntityFactory.Create(entity, position, turretConfig.PrefabPath);
 
             entity
-                .AddRotationDirection(new ReactiveVariable<Vector3>())
-                .AddRotationSpeed(new ReactiveVariable<float>(9999))
                 .AddCurrentTarget()
+                .AddRotationDirection(new ReactiveVariable<Vector3>())
+                .AddRotationSpeed(new ReactiveVariable<float>(turretConfig.RotationSpeed))
 
                 .AddAttackProcessInitialTime(new ReactiveVariable<float>(turretConfig.AttackProcessInitialTime))
                 .AddAttackProcessCurrentTime()
@@ -357,18 +362,18 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddAttackCooldownInitialTime(new ReactiveVariable<float>(turretConfig.AttackCooldown))
                 .AddInAttackCooldown()
 
-                .AddShootAttackDamage(new ReactiveVariable<float>(turretConfig.AttackDamage / 2));
+                .AddShootAttackDamage(new ReactiveVariable<float>(turretConfig.AttackDamage / 2))
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Station));
 
             ICompositeCondition canRotate = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+                .Add(new FuncCondition(() => true));
 
             ICompositeCondition canStartAttack = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false))
                 .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
                 .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
 
             ICompositeCondition mustCanceledAttack = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value));
+                .Add(new FuncCondition(() => false));
 
             entity
                 .AddCanRotate(canRotate)

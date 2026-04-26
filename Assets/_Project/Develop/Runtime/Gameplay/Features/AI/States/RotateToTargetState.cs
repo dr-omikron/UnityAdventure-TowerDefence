@@ -20,8 +20,10 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI.States
 
         public void Update(float deltaTime)
         {
-            if(_target.Value != null && _target.Value.Transform != null)
+            if(_target.Value != null)
+            {
                 _rotationDirection.Value = (_target.Value.Transform.position - _transform.position).normalized;
+            }
         }
     }
 }

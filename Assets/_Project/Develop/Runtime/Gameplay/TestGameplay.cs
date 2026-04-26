@@ -1,6 +1,9 @@
-﻿using _Project.Develop.Runtime.Configs.Gameplay.Entities;
+﻿using System;
+using _Project.Develop.Runtime.Configs.Gameplay.Entities;
 using _Project.Develop.Runtime.Configs.Gameplay.Levels;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
+using _Project.Develop.Runtime.Gameplay.Features.AI;
+using _Project.Develop.Runtime.Gameplay.Features.AI.States;
 using _Project.Develop.Runtime.Gameplay.Features.Enemies;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Station;
@@ -8,6 +11,7 @@ using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
 using _Project.Develop.Runtime.Utilities.Physic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Develop.Runtime.Gameplay
 {
@@ -19,9 +23,12 @@ namespace _Project.Develop.Runtime.Gameplay
         private Entity _station;
         private Entity _simpleEnemy;
         private Entity _shootingEnemy;
+        private Entity _turret;
 
         private StationFactory _stationFactory;
         private EnemiesFactory _enemiesFactory;
+        private EntitiesFactory _entitiesFactory;
+        private BrainsFactory _brainsFactory;
         private ConfigsProviderService _configsProvider;
 
         private ScreenToWorldPointRaycastService _screenToWorldPointRaycastService;
@@ -36,6 +43,8 @@ namespace _Project.Develop.Runtime.Gameplay
             _configsProvider = _container.Resolve<ConfigsProviderService>();
             _stationFactory = _container.Resolve<StationFactory>();
             _enemiesFactory = _container.Resolve<EnemiesFactory>();
+            _entitiesFactory = _container.Resolve<EntitiesFactory>();
+            _brainsFactory = _container.Resolve<BrainsFactory>();
         }
 
         public void Run()
@@ -49,10 +58,14 @@ namespace _Project.Develop.Runtime.Gameplay
 
             SimpleEnemyConfig simpleEnemyConfig = _configsProvider.GetConfig<SimpleEnemyConfig>();
             _simpleEnemy = _enemiesFactory.Create(Vector3.right * 100, simpleEnemyConfig, _station);
-            Entity simpleEnemy2 = _enemiesFactory.Create(Vector3.forward * 100, simpleEnemyConfig, _station);
+            /*Entity simpleEnemy2 = _enemiesFactory.Create(Vector3.forward * 100, simpleEnemyConfig, _station);
 
             ShootingEnemyConfig shootingEnemyConfig = _configsProvider.GetConfig<ShootingEnemyConfig>();
-            _shootingEnemy = _simpleEnemy = _enemiesFactory.Create(Vector3.left * 100, shootingEnemyConfig, _station);
+            _shootingEnemy = _simpleEnemy = _enemiesFactory.Create(Vector3.left * 100, shootingEnemyConfig, _station);*/
+
+            TurretConfig turretConfig = _configsProvider.GetConfig<TurretConfig>();
+            _turret = _entitiesFactory.CreateTurret(new Vector3(1, 1, 0) * 20, turretConfig);
+            _brainsFactory.CreateTurretBrain(_turret, new NearestDamageableTargetSelector(_turret));
         }
 
         private void Update()

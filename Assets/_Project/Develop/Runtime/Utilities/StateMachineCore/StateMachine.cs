@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Project.Develop.Runtime.Utilities.Conditions;
+using UnityEngine;
 
 namespace _Project.Develop.Runtime.Utilities.StateMachineCore
 {
@@ -87,6 +88,8 @@ namespace _Project.Develop.Runtime.Utilities.StateMachineCore
 
         private void SwitchState(StateNode<TState> nextState)
         {
+
+
             _currentState?.State.Exit();
             _currentState = nextState;
             _currentState.State.Enter();

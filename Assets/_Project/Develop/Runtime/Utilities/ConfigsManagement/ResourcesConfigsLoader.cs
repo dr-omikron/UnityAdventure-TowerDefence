@@ -20,7 +20,8 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
             {typeof(LevelsListConfig), "Configs/Gameplay/Levels/LevelsListConfig"},
             {typeof(StationConfig), "Configs/Gameplay/Entities/StationConfig"},
             {typeof(SimpleEnemyConfig), "Configs/Gameplay/Entities/SimpleEnemyConfig"},
-            {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"}
+            {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"},
+            {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"}
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resourcesAssetsLoader)
