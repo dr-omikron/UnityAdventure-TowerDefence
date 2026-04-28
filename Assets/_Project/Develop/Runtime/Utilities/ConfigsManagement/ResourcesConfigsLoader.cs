@@ -21,7 +21,8 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
             {typeof(StationConfig), "Configs/Gameplay/Entities/StationConfig"},
             {typeof(SimpleEnemyConfig), "Configs/Gameplay/Entities/SimpleEnemyConfig"},
             {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"},
-            {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"}
+            {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"},
+            {typeof(BombConfig), "Configs/Gameplay/Entities/BombConfig"}
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resourcesAssetsLoader)

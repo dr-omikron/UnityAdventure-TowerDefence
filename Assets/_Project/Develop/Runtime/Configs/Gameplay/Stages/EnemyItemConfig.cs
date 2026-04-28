@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Develop.Runtime.Configs.Gameplay.Entities;
 using UnityEngine;
 
 namespace _Project.Develop.Runtime.Configs.Gameplay.Stages
@@ -7,7 +8,7 @@ namespace _Project.Develop.Runtime.Configs.Gameplay.Stages
 
     public class EnemyItemConfig
     {
-        //[field: SerializeField] public EnemyConfig
+        [field: SerializeField] public EntityConfig EnemyConfig { get; private set; }
         [field: SerializeField] public Vector3 SpawnPosition { get; private set; }
     }
 }

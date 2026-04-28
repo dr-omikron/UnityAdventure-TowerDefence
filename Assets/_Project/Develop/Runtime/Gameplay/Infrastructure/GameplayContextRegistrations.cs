@@ -25,8 +25,6 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             _inputArgs = args;
 
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
-            container.RegisterAsSingle(CreateStagesFactory);
-            container.RegisterAsSingle(CreateStageProviderService);
             container.RegisterAsSingle(CreateBrainsFactory);
             container.RegisterAsSingle(CreateAIBrainContext);
             container.RegisterAsSingle(CreateGameplayStatesFactory);
@@ -40,19 +38,12 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateStationHolderService).NonLazy();
             container.RegisterAsSingle(CreateStationFactory);
             container.RegisterAsSingle(CreateEnemiesFactory);
+            container.RegisterAsSingle(CreateStageFactory);
+            container.RegisterAsSingle(CreateStageProvider);
         }
 
         private static DesktopInput CreateDesktopInput(DIContainer c)
             => new DesktopInput();
-
-        private static StagesFactory CreateStagesFactory(DIContainer c)
-            => new StagesFactory(c);
-
-        private static StageProviderService CreateStageProviderService(DIContainer c)
-        {
-            return new StageProviderService(c.Resolve<ConfigsProviderService>().GetConfig<LevelsListConfig>().GetBy(_inputArgs.LevelNumber),
-                c.Resolve<StagesFactory>());
-        }
 
         private static BrainsFactory CreateBrainsFactory(DIContainer c)
             => new BrainsFactory(c);
@@ -96,6 +87,16 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             => new StationFactory(c);
 
         private static EnemiesFactory CreateEnemiesFactory(DIContainer c)
-        => new EnemiesFactory(c);
+            => new EnemiesFactory(c);
+
+        private static StagesFactory CreateStageFactory(DIContainer c)
+            => new StagesFactory(c);
+
+        private static StageProviderService CreateStageProvider(DIContainer c)
+        {
+            LevelsListConfig levelsListConfig = c.Resolve<ConfigsProviderService>().GetConfig<LevelsListConfig>();
+            return new StageProviderService(levelsListConfig.GetBy(Random.Range(0, levelsListConfig.Levels.Count)),
+                c.Resolve<StagesFactory>());
+        }
     }
 }

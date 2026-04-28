@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0cb3daf066c074db019d2865982b16, type: 3}
   m_Name: LevelConfig_6
   m_EditorClassIdentifier: 
-  _stageConfigs: []
+  _stageConfigs:
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  - {fileID: 11400000, guid: 33a73b30895cadb4787aae29294402cd, type: 2}
+  <StationMaxHealth>k__BackingField: 50

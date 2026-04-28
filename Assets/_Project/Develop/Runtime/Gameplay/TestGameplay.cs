@@ -66,6 +66,9 @@ namespace _Project.Develop.Runtime.Gameplay
             TurretConfig turretConfig = _configsProvider.GetConfig<TurretConfig>();
             _turret = _entitiesFactory.CreateTurret(new Vector3(1, 1, 0) * 20, turretConfig);
             _brainsFactory.CreateTurretBrain(_turret, new NearestDamageableTargetSelector(_turret));
+
+            BombConfig bombConfig = _configsProvider.GetConfig<BombConfig>();
+            _entitiesFactory.CreateBomb(Vector3.right * 40, bombConfig);
         }
 
         private void Update()

@@ -394,6 +394,49 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
+        public Entity CreateBomb(Vector3 position, BombConfig bombConfig)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntityFactory.Create(entity, position, bombConfig.PrefabPath);
+
+            entity
+                .AddIsDead()
+                .AddContactDetectingMask(Layers.EntityMask)
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64))
+                .AddBodyContactDamage(new ReactiveVariable<float>(bombConfig.BodyContactDamage))
+                .AddDeathMask(Layers.EntityMask)
+                .AddIsTouchingDeathMask()
+                .AddIsTouchAnotherTeam()
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Station));
+
+            ICompositeCondition mustDie = new CompositeCondition(LogicOperations.Or)
+                .Add(new FuncCondition(() => entity.IsTouchingDeathMask.Value))
+                .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease);
+
+            entity
+                .AddSystem(new BodyContactsDetectingSystem())
+                .AddSystem(new BodyContactsEntitiesFilterSystem(_contactsEntitiesFilterService))
+                .AddSystem(new DealDamageOnContactSystem())
+                .AddSystem(new DeathMaskTouchDetectorSystem())
+                .AddSystem(new AnotherTeamTouchDetectorSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
         private Entity CreateEmpty() => new Entity();
     }
 }
