@@ -18,9 +18,21 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI.States
             _rotationDirection = entity.RotationDirection;
         }
 
+        public override void Enter()
+        {
+            base.Enter();
+
+            UpdateRotationDirection();
+        }
+
         public void Update(float deltaTime)
         {
-            if(_target.Value != null)
+            UpdateRotationDirection();
+        }
+
+        private void UpdateRotationDirection()
+        {
+            if (_target.Value != null)
             {
                 _rotationDirection.Value = (_target.Value.Transform.position - _transform.position).normalized;
             }

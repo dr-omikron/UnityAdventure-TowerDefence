@@ -94,7 +94,7 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
                 return angleToTarget <= 3f;
             });
 
-            ICondition fromMovementToEmptyState = new FuncCondition(() => target == null);
+            ICondition fromMovementToEmptyState = new FuncCondition(() => target.Value == null);
 
             AIStateMachine stateMachine = new AIStateMachine();
 

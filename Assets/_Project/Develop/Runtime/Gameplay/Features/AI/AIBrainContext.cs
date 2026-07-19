@@ -45,7 +45,7 @@ namespace _Project.Develop.Runtime.Gameplay.Features.AI
                 if (_entitiesToBrain[i].Entity.IsInit == false)
                 {
                     int lastIndex = _entitiesToBrain.Count - 1;
-                    
+
                     _entitiesToBrain[i].Brain.Dispose();
                     _entitiesToBrain[i] = _entitiesToBrain[lastIndex];
                     _entitiesToBrain.RemoveAt(lastIndex);
