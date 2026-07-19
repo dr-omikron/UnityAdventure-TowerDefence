@@ -14,10 +14,7 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
     {
         private void Awake()
         {
-            Debug.Log("Старт проекта, сетап настроек");
             SetupAppSettings();
-
-            Debug.Log("Процесс регистрации всего проекта");
 
             DIContainer projectContainer = new DIContainer();
             ProjectContextRegistrations.Process(projectContainer);
@@ -39,7 +36,6 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
             PlayerDataProvider playerDataProvider = container.Resolve<PlayerDataProvider>();
 
             loadingScreen.Show();
-            Debug.Log("Начинается инициализация сервисов");
 
             yield return container.Resolve<ConfigsProviderService>().LoadAsync();
 
@@ -54,10 +50,9 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
 
             yield return new WaitForSeconds(1.0f);
 
-            Debug.Log("Завершается инициализация сервисов");
             loadingScreen.Hide();
 
-            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, new GameplayInputArgs(1));
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
         }
     }
 }

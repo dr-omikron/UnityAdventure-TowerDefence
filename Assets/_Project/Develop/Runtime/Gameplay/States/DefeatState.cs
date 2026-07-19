@@ -20,6 +20,13 @@ namespace _Project.Develop.Runtime.Gameplay.States
             _coroutinesPerformer = coroutinesPerformer;
         }
 
+        public override void Enter()
+        {
+            base.Enter();
+            Debug.Log("DEFEAT!");
+        }
+
+        // TODO: debug-заглушка вместо DefeatPopup — убрать, когда попап будет открываться из Enter()
         public void Update(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.Q))

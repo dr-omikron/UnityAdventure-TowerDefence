@@ -27,8 +27,11 @@ namespace _Project.Develop.Runtime.Gameplay.States
             //WinPopup
             //LevelProgressionService.AddToLevelCompleted(GameplayInputArgs.LevelNumber)
             //PlayerDataProvider.Save
+
+            Debug.Log("WIN!");
         }
 
+        // TODO: debug-заглушка вместо WinPopup — убрать, когда попап будет открываться из Enter()
         public void Update(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.Q))

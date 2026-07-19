@@ -87,6 +87,7 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
         private void SpawnEnemy(EnemyItemConfig enemyItemConfig)
         {
             Entity spawnedEnemy = _enemiesFactory.Create(enemyItemConfig.SpawnPosition, enemyItemConfig.EnemyConfig, _enemiesTarget);
+
             IDisposable removeReason = spawnedEnemy.IsDead.Subscribe((oldValue, isDead) =>
             {
                 if (isDead)

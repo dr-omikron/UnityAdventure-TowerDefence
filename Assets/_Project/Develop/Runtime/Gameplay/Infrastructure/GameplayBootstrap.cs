@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
+using _Project.Develop.Runtime.Configs.Gameplay.Levels;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.Features.AI;
+using _Project.Develop.Runtime.Gameplay.Features.Station;
+using _Project.Develop.Runtime.Gameplay.States;
 using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
-using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
+using _Project.Develop.Runtime.Utilities.ConfigsManagement;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
 
@@ -16,8 +19,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
         private GameplayInputArgs _inputArgs;
         private EntitiesLifeContext _entitiesLifeContext;
         private AIBrainContext _aiBrainContext;
-
-        [SerializeField] private TestGameplay _testGameplay;
+        private GameplayStatesContext _gameplayStatesContext;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -33,39 +35,28 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
         public override IEnumerator Initialize()
         {
-            Debug.Log("Loaded level number: " + _inputArgs.LevelNumber);
-            Debug.Log("Gameplay Scene Initialized");
-
-            _testGameplay.Initialize(_container);
-
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _aiBrainContext = _container.Resolve<AIBrainContext>();
-            //_gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
+            _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
+
+            _container.Resolve<StationFactory>()
+                .Create(_container.Resolve<ConfigsProviderService>()
+                    .GetConfig<LevelsListConfig>()
+                    .GetBy(_inputArgs.LevelNumber));
 
             yield break;
         }
 
         public override void Run()
         {
-            Debug.Log("Gameplay Scene Started");
-
-            _testGameplay.Run();
-
-            //_gameplayStatesContext.Run();
+            _gameplayStatesContext.Run();
         }
 
         private void Update()
         {
             _aiBrainContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
-            //_gameplayStatesContext?.Update(Time.deltaTime);
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
-                ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
-                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
-            }
+            _gameplayStatesContext?.Update(Time.deltaTime);
         }
     }
 }

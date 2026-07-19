@@ -1,4 +1,5 @@
 ﻿using _Project.Develop.Runtime.Utilities.StateMachineCore;
+using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay.States
 {
@@ -10,6 +11,8 @@ namespace _Project.Develop.Runtime.Gameplay.States
             base.Enter();
 
             //Create shop popup
+
+            Debug.Log("Entering To Preparation State");
         }
 
         public override void Exit()

@@ -8,21 +8,21 @@ namespace _Project.Develop.Runtime.UI.MainMenu
 {
     public class MainMenuScreenView : MonoBehaviour, IView
     {
-        public event Action OpenLevelsMenuButtonClicked;
+        public event Action PlayGameButtonClicked;
 
         [field:SerializeField] public IconTextListView WalletView { get; private set; }
-        [SerializeField] private Button _openLevelsMenuButton;
+        [SerializeField] private Button _playGameButton;
 
         private void OnEnable()
         {
-            _openLevelsMenuButton.onClick.AddListener(OnOpenLevelsMenuButtonClicked);
+            _playGameButton.onClick.AddListener(OnPlayGameButtonClicked);
         }
 
         private void OnDisable()
         {
-            _openLevelsMenuButton.onClick.RemoveListener(OnOpenLevelsMenuButtonClicked);
+            _playGameButton.onClick.RemoveListener(OnPlayGameButtonClicked);
         }
 
-        private void OnOpenLevelsMenuButtonClicked() => OpenLevelsMenuButtonClicked?.Invoke();
+        private void OnPlayGameButtonClicked() => PlayGameButtonClicked?.Invoke();
     }
 }

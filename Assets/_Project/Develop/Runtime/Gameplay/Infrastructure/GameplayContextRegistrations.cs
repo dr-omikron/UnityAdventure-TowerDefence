@@ -95,7 +95,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
         private static StageProviderService CreateStageProvider(DIContainer c)
         {
             LevelsListConfig levelsListConfig = c.Resolve<ConfigsProviderService>().GetConfig<LevelsListConfig>();
-            return new StageProviderService(levelsListConfig.GetBy(Random.Range(0, levelsListConfig.Levels.Count)),
+            return new StageProviderService(levelsListConfig.GetBy(_inputArgs.LevelNumber),
                 c.Resolve<StagesFactory>());
         }
     }
