@@ -8,7 +8,7 @@ namespace _Project.Develop.Runtime.UI.Gameplay.Shop
     {
         [SerializeField] private ShopTilesListView _shopTilesListView;
 
-        public ShopTilesListView LevelTilesListView => _shopTilesListView;
+        public ShopTilesListView ShopTilesListView => _shopTilesListView;
 
         protected override void ModifyShowAnimation(Sequence sequence)
         {

@@ -1,11 +1,12 @@
 ﻿using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Shop;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Station;
 using _Project.Develop.Runtime.Infrastructure.DI;
+using _Project.Develop.Runtime.UI.Gameplay;
 using _Project.Develop.Runtime.Utilities.Conditions;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
-using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay.States
 {
@@ -20,7 +21,9 @@ namespace _Project.Develop.Runtime.Gameplay.States
 
         public PreparationState CreatePreparationState()
         {
-            return new PreparationState();
+            return new PreparationState(
+                _container.Resolve<GameplayPopupService>(),
+                _container.Resolve<FieldPlacementService>());
         }
 
         public StageProcessState CreateStageProcessState()
@@ -33,7 +36,8 @@ namespace _Project.Develop.Runtime.Gameplay.States
             return new WinState(
                 _container.Resolve<IInputService>(),
                 _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>());
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<PurchasedEntitiesHolderService>());
         }
 
         public DefeatState CreateDefeatState()
@@ -41,7 +45,8 @@ namespace _Project.Develop.Runtime.Gameplay.States
             return new DefeatState(
                 _container.Resolve<IInputService>(),
                 _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>());
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<PurchasedEntitiesHolderService>());
         }
 
         public GameplayStateMachine CreateCoreLoopState()
@@ -56,7 +61,7 @@ namespace _Project.Develop.Runtime.Gameplay.States
 
             ICompositeCondition preparationToStageStateCondition = new CompositeCondition()
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage()))
-                .Add(new FuncCondition(() => Input.GetKeyDown(KeyCode.Space)));
+                .Add(new FuncCondition(() => preparationState.IsReadyToNextStage));
 
             GameplayStateMachine coreLoopState = new GameplayStateMachine();
 

@@ -322,6 +322,102 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.Sensors.IsTouchAnotherTeam {Value = value});
 		}
 
+		public _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitCenter OrbitCenterC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitCenter>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> OrbitCenter => OrbitCenterC.Value;
+
+		public bool TryGetOrbitCenter(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitCenter component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitCenter()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitCenter { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitCenter(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitCenter {Value = value});
+		}
+
+		public _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitRadius OrbitRadiusC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitRadius>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> OrbitRadius => OrbitRadiusC.Value;
+
+		public bool TryGetOrbitRadius(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitRadius component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitRadius()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitRadius { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitRadius(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitRadius {Value = value});
+		}
+
+		public _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngle OrbitAngleC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngle>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> OrbitAngle => OrbitAngleC.Value;
+
+		public bool TryGetOrbitAngle(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngle component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitAngle()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngle { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitAngle(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngle {Value = value});
+		}
+
+		public _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngularSpeed OrbitAngularSpeedC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngularSpeed>();
+
+		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> OrbitAngularSpeed => OrbitAngularSpeedC.Value;
+
+		public bool TryGetOrbitAngularSpeed(out _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			bool result = TryGetComponent(out _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngularSpeed component);
+			if(result)
+				value = component.Value;
+			else
+				value = default(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>);
+			return result;
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitAngularSpeed()
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngularSpeed { Value = new _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single>() });
+		}
+
+		public _Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddOrbitAngularSpeed(_Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new _Project.Develop.Runtime.Gameplay.Features.OrbitMovement.OrbitAngularSpeed {Value = value});
+		}
+
 		public _Project.Develop.Runtime.Gameplay.Features.MovementFeatures.MoveDirection MoveDirectionC => GetComponent<_Project.Develop.Runtime.Gameplay.Features.MovementFeatures.MoveDirection>();
 
 		public _Project.Develop.Runtime.Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;

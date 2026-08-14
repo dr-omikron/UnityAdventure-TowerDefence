@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: TurretConfig
   m_EditorClassIdentifier: 
   <PrefabPath>k__BackingField: Entities/Turret
+  <RotationSpeed>k__BackingField: 900
   <AttackProcessInitialTime>k__BackingField: 1
   <AttackCooldown>k__BackingField: 2
   <AttackDamage>k__BackingField: 25
+  <OrbitRadius>k__BackingField: 25
+  <OrbitHeight>k__BackingField: 15
+  <OrbitAngularSpeed>k__BackingField: 30

@@ -9,6 +9,7 @@ using _Project.Develop.Runtime.Gameplay.Features.Attack.Shoot;
 using _Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using _Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using _Project.Develop.Runtime.Gameplay.Features.MovementFeatures;
+using _Project.Develop.Runtime.Gameplay.Features.OrbitMovement;
 using _Project.Develop.Runtime.Gameplay.Features.Sensors;
 using _Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using _Project.Develop.Runtime.Infrastructure.DI;
@@ -340,9 +341,11 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateTurret(Vector3 position, TurretConfig turretConfig)
+        public Entity CreateTurret(TurretConfig turretConfig, Vector3 orbitCenter, float orbitStartAngle)
         {
             Entity entity = CreateEmpty();
+
+            Vector3 position = OrbitGeometry.GetPointOn(orbitCenter, turretConfig.OrbitRadius, orbitStartAngle);
 
             _monoEntityFactory.Create(entity, position, turretConfig.PrefabPath);
 
@@ -350,6 +353,11 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddCurrentTarget()
                 .AddRotationDirection(new ReactiveVariable<Vector3>())
                 .AddRotationSpeed(new ReactiveVariable<float>(turretConfig.RotationSpeed))
+
+                .AddOrbitCenter(new ReactiveVariable<Vector3>(orbitCenter))
+                .AddOrbitRadius(new ReactiveVariable<float>(turretConfig.OrbitRadius))
+                .AddOrbitAngle(new ReactiveVariable<float>(orbitStartAngle))
+                .AddOrbitAngularSpeed(new ReactiveVariable<float>(turretConfig.OrbitAngularSpeed))
 
                 .AddAttackProcessInitialTime(new ReactiveVariable<float>(turretConfig.AttackProcessInitialTime))
                 .AddAttackProcessCurrentTime()
@@ -381,6 +389,7 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMustCanceledAttack(mustCanceledAttack);
 
             entity
+                .AddSystem(new RigidbodyOrbitSystem())
                 .AddSystem(new RigidbodyRotationSystem())
                 .AddSystem(new StartAttackSystem())
                 .AddSystem(new AttackCanceledSystem())

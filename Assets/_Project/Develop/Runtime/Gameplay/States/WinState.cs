@@ -1,4 +1,5 @@
 ﻿using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Shop;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
 using _Project.Develop.Runtime.Utilities.StateMachineCore;
@@ -12,9 +13,11 @@ namespace _Project.Develop.Runtime.Gameplay.States
         private readonly ICoroutinesPerformer _coroutinesPerformer;
 
         public WinState(
-            IInputService inputService, 
-            SceneSwitcherService sceneSwitcherService, 
-            ICoroutinesPerformer coroutinesPerformer) : base(inputService)
+            IInputService inputService,
+            SceneSwitcherService sceneSwitcherService,
+            ICoroutinesPerformer coroutinesPerformer,
+            PurchasedEntitiesHolderService purchasedEntitiesHolderService)
+            : base(inputService, purchasedEntitiesHolderService)
         {
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;

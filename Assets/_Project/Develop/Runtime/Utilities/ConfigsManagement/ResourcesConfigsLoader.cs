@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _Project.Develop.Runtime.Configs.Gameplay.Entities;
 using _Project.Develop.Runtime.Configs.Gameplay.Levels;
+using _Project.Develop.Runtime.Configs.Gameplay.Shop;
 using _Project.Develop.Runtime.Configs.Meta.Wallet;
 using _Project.Develop.Runtime.Utilities.AssetsManagement;
 using UnityEngine;
@@ -22,7 +23,8 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
             {typeof(SimpleEnemyConfig), "Configs/Gameplay/Entities/SimpleEnemyConfig"},
             {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"},
             {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"},
-            {typeof(BombConfig), "Configs/Gameplay/Entities/BombConfig"}
+            {typeof(BombConfig), "Configs/Gameplay/Entities/BombConfig"},
+            {typeof(ShopConfig), "Configs/Gameplay/Shop/ShopConfig"}
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resourcesAssetsLoader)

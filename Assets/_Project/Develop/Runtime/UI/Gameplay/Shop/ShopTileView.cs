@@ -9,6 +9,10 @@ namespace _Project.Develop.Runtime.UI.Gameplay.Shop
 {
     public class ShopTileView : MonoBehaviour, IShowableView
     {
+        private const float NORMAL_SCALE = 1f;
+        private const float SELECTED_SCALE = 1.1f;
+        private const float SELECTION_ANIMATION_TIME = 0.1f;
+
         public event Action Clicked;
 
         [SerializeField] private Image _background;
@@ -34,6 +38,11 @@ namespace _Project.Develop.Runtime.UI.Gameplay.Shop
         public void SetActive() => _background.color = _activeColor;
         public void SetIcon(Sprite icon) => _icon.sprite = icon;
         public void SetTitle(string title) => _titleText.text = title;
+        public void SetCost(string cost) => _costText.text = cost;
+
+        public void SetSelected() => ScaleTo(SELECTED_SCALE);
+
+        public void SetDeselected() => ScaleTo(NORMAL_SCALE);
 
         public Tween Show()
         {
@@ -50,6 +59,21 @@ namespace _Project.Develop.Runtime.UI.Gameplay.Shop
         {
             transform.DOKill();
             return DOTween.Sequence();
+        }
+
+        private void OnDestroy()
+        {
+            transform.DOKill();
+        }
+
+        private void ScaleTo(float scale)
+        {
+            transform.DOKill();
+
+            transform
+                .DOScale(scale, SELECTION_ANIMATION_TIME)
+                .SetUpdate(true)
+                .Play();
         }
 
         private void OnClick() => Clicked?.Invoke();

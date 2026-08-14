@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _background: {fileID: 480779472867223608}
-  _icon: {fileID: 0}
+  _icon: {fileID: 316414198472558128}
   _titleText: {fileID: 660596196514898429}
   _costText: {fileID: 4167346761886292502}
   _button: {fileID: 5526017009241088279}

@@ -1,6 +1,7 @@
 ﻿using System;
 using _Project.Develop.Runtime.UI.Core;
 using _Project.Develop.Runtime.UI.Gameplay.ResultPopups;
+using _Project.Develop.Runtime.UI.Gameplay.Shop;
 using UnityEngine;
 
 namespace _Project.Develop.Runtime.UI.Gameplay
@@ -34,6 +35,14 @@ namespace _Project.Develop.Runtime.UI.Gameplay
         {
             DefeatPopupView view = ViewsFactory.Create<DefeatPopupView>(ViewIDs.DefeatPopup, PopupLayer);
             DefeatPopupPresenter popupPresenter = _gameplayPresentersFactory.CreateDefeatPopupPresenter(view);
+            OnPopupCreated(popupPresenter, view, closedCallback);
+            return popupPresenter;
+        }
+
+        public ShopPopupPresenter OpenShopPopup(Action closedCallback = null)
+        {
+            ShopPopupView view = ViewsFactory.Create<ShopPopupView>(ViewIDs.ShopPopup, PopupLayer);
+            ShopPopupPresenter popupPresenter = _gameplayPresentersFactory.CreateShopPopupPresenter(view);
             OnPopupCreated(popupPresenter, view, closedCallback);
             return popupPresenter;
         }

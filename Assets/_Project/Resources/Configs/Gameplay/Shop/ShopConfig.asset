@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c1e4a7b9d0f42a3b8c6e1d7f30a2b41, type: 3}
+  m_Name: ShopConfig
+  m_EditorClassIdentifier: 
+  _items:
+  - <EntityConfig>k__BackingField: {fileID: 11400000, guid: a1be401b4631e534d824519850776519,
+      type: 2}
+    <Title>k__BackingField: Turret
+    <Icon>k__BackingField: {fileID: 21300000, guid: e0b97c1d71aa9df4ab3192a5e33b0f31,
+      type: 3}
+    <CurrencyType>k__BackingField: 0
+    <Cost>k__BackingField: 100
+  - <EntityConfig>k__BackingField: {fileID: 11400000, guid: 3f66cc17edf586845a0119ad27ce34a6,
+      type: 2}
+    <Title>k__BackingField: Bomb
+    <Icon>k__BackingField: {fileID: 21300000, guid: acb6dbef378e16c4099697cfe1b10a21,
+      type: 3}
+    <CurrencyType>k__BackingField: 0
+    <Cost>k__BackingField: 50
