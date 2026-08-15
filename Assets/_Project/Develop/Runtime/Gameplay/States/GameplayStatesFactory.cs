@@ -38,18 +38,16 @@ namespace _Project.Develop.Runtime.Gameplay.States
         {
             return new WinState(
                 _container.Resolve<IInputService>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>(),
-                _container.Resolve<PurchasedEntitiesHolderService>());
+                _container.Resolve<PurchasedEntitiesHolderService>(),
+                _container.Resolve<GameplayPopupService>());
         }
 
         public DefeatState CreateDefeatState()
         {
             return new DefeatState(
                 _container.Resolve<IInputService>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>(),
-                _container.Resolve<PurchasedEntitiesHolderService>());
+                _container.Resolve<PurchasedEntitiesHolderService>(),
+                _container.Resolve<GameplayPopupService>());
         }
 
         public GameplayStateMachine CreateCoreLoopState()

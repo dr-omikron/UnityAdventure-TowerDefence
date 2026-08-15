@@ -39,7 +39,7 @@ namespace _Project.Develop.Runtime.UI.Gameplay.ResultPopups
             _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
         }
 
-        private void OnContinueButtonClicked() => ContinueClicked?.Invoke();
+        public void OnContinueButtonClicked() => ContinueClicked?.Invoke();
         private void OnRestartButtonClicked() => RestartClicked?.Invoke();
     }
 }

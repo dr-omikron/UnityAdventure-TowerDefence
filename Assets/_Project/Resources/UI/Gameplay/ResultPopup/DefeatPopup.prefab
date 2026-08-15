@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 5962886722476737560}
   - component: {fileID: 8976957453643097770}
   m_Layer: 0
-  m_Name: TapToContinueText
+  m_Name: TapToExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1099,12 +1099,12 @@ PrefabInstance:
     - target: {fileID: -1903886075381988640, guid: 159c6f0a52dfebb418a4e03cbedb94fe,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCloseButtonClicked
+      value: OnContinueButtonClicked
       objectReference: {fileID: 0}
     - target: {fileID: -1903886075381988640, guid: 159c6f0a52dfebb418a4e03cbedb94fe,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: _Project.Develop.Runtime.UI.Core.PopupViewBase, Assembly-CSharp
+      value: _Project.Develop.Runtime.UI.Gameplay.ResultPopups.DefeatPopupView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: -1903886075381988640, guid: 159c6f0a52dfebb418a4e03cbedb94fe,
         type: 3}
