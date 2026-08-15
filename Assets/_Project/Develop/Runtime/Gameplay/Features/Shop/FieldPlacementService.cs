@@ -1,8 +1,6 @@
 using System;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
-using _Project.Develop.Runtime.Utilities.Physic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace _Project.Develop.Runtime.Gameplay.Features.Shop
 {
@@ -10,15 +8,13 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Shop
     {
         public event Action<Vector3> PositionPicked;
 
-        private readonly IInputService _inputService;
-        private readonly ScreenToWorldPointRaycastService _raycastService;
+        private readonly FieldClickService _fieldClickService;
 
         private bool _isActive;
 
-        public FieldPlacementService(IInputService inputService, ScreenToWorldPointRaycastService raycastService)
+        public FieldPlacementService(FieldClickService fieldClickService)
         {
-            _inputService = inputService;
-            _raycastService = raycastService;
+            _fieldClickService = fieldClickService;
         }
 
         public bool IsActive => _isActive;
@@ -32,24 +28,10 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Shop
             if (_isActive == false)
                 return;
 
-            if (_inputService.IsClicked == false)
+            if (_fieldClickService.TryGetClickedPoint(out Vector3 point) == false)
                 return;
 
-            if (IsPointerOverUI())
-                return;
-
-            if (_raycastService.Raycast(out RaycastHit hit) == false)
-                return;
-
-            PositionPicked?.Invoke(hit.point);
-        }
-
-        private bool IsPointerOverUI()
-        {
-            if (EventSystem.current == null)
-                return false;
-
-            return EventSystem.current.IsPointerOverGameObject();
+            PositionPicked?.Invoke(point);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+﻿using _Project.Develop.Runtime.Gameplay.Features.ExplosionAbility;
+using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Shop;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Station;
@@ -28,7 +29,9 @@ namespace _Project.Develop.Runtime.Gameplay.States
 
         public StageProcessState CreateStageProcessState()
         {
-            return new StageProcessState(_container.Resolve<StageProviderService>());
+            return new StageProcessState(
+                _container.Resolve<StageProviderService>(),
+                _container.Resolve<ExplosionAbilityService>());
         }
 
         public WinState CreateWinState()

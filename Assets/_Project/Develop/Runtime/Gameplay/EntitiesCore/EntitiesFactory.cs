@@ -1,4 +1,5 @@
-﻿using _Project.Develop.Runtime.Configs.Gameplay.Entities;
+﻿using _Project.Develop.Runtime.Configs.Gameplay.Abilities;
+using _Project.Develop.Runtime.Configs.Gameplay.Entities;
 using _Project.Develop.Runtime.Configs.Gameplay.Levels;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using _Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
@@ -440,6 +441,52 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        public Entity CreateExplosionCaster(ExplosionAbilityConfig explosionAbilityConfig)
+        {
+            Entity entity = CreateEmpty();
+
+            entity
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Station))
+
+                .AddAttackProcessInitialTime(new ReactiveVariable<float>(explosionAbilityConfig.CastTime))
+                .AddAttackProcessCurrentTime()
+                .AddInAttackProcess()
+                .AddStartAreaAttackRequest()
+                .AddStartAttackEvent()
+                .AddEndAttackEvent()
+                .AddAttackCooldownCurrentTime()
+                .AddAttackCooldownInitialTime(new ReactiveVariable<float>(explosionAbilityConfig.Cooldown))
+                .AddInAttackCooldown()
+
+                .AddCastAreaPositionEvent()
+                .AddEndCastAreaPositionEvent()
+                .AddAreaDetectingRadius(new ReactiveVariable<float>(explosionAbilityConfig.Radius))
+                .AddAreaDetectingMask(Layers.EntityMask)
+                .AddAreaCollidersBuffer(new Buffer<Collider>(64))
+                .AddAreaEntitiesBuffer(new Buffer<Entity>(64))
+                .AddAreaDamage(new ReactiveVariable<float>(explosionAbilityConfig.Damage));
+
+            ICompositeCondition canStartAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
+
+            entity.AddCanStartAttack(canStartAttack);
+
+            entity
+                .AddSystem(new StartAreaAttackSystem())
+                .AddSystem(new AttackProcessTimerSystem())
+                .AddSystem(new EndAttackSystem())
+                .AddSystem(new AttackCooldownTimerSystem())
+                .AddSystem(new AriaContactsDetectingSystem())
+                .AddSystem(new AreaCastDebugDrawSystem(Color.red))
+                .AddSystem(new AreaContactsEntitiesFilterSystem(_contactsEntitiesFilterService))
+                .AddSystem(new DealDamageOnAreaSystem());
 
             _entitiesLifeContext.Add(entity);
 

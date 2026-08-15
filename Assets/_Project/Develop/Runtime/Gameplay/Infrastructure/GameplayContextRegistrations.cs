@@ -3,6 +3,7 @@ using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using _Project.Develop.Runtime.Gameplay.Features.AI;
 using _Project.Develop.Runtime.Gameplay.Features.Enemies;
+using _Project.Develop.Runtime.Gameplay.Features.ExplosionAbility;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Sensors;
 using _Project.Develop.Runtime.Gameplay.Features.Shop;
@@ -50,7 +51,9 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateTurretsFactory);
             container.RegisterAsSingle(CreatePurchasedEntitiesHolderService).NonLazy();
             container.RegisterAsSingle(CreateShopService);
+            container.RegisterAsSingle(CreateFieldClickService);
             container.RegisterAsSingle(CreateFieldPlacementService);
+            container.RegisterAsSingle(CreateExplosionAbilityService).NonLazy();
             container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
             container.RegisterAsSingle(CreateGameplayPresentersFactory);
             container.RegisterAsSingle(CreateGameplayPopupService);
@@ -133,11 +136,22 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
                 c.Resolve<PurchasedEntitiesHolderService>());
         }
 
-        private static FieldPlacementService CreateFieldPlacementService(DIContainer c)
+        private static FieldClickService CreateFieldClickService(DIContainer c)
         {
-            return new FieldPlacementService(
+            return new FieldClickService(
                 c.Resolve<IInputService>(),
                 c.Resolve<ScreenToWorldPointRaycastService>());
+        }
+
+        private static FieldPlacementService CreateFieldPlacementService(DIContainer c)
+            => new FieldPlacementService(c.Resolve<FieldClickService>());
+
+        private static ExplosionAbilityService CreateExplosionAbilityService(DIContainer c)
+        {
+            return new ExplosionAbilityService(
+                c.Resolve<EntitiesFactory>(),
+                c.Resolve<FieldClickService>(),
+                c.Resolve<ConfigsProviderService>());
         }
 
         private static GameplayUIRoot CreateGameplayUIRoot(DIContainer c)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Develop.Runtime.Configs.Gameplay.Abilities;
 using _Project.Develop.Runtime.Configs.Gameplay.Entities;
 using _Project.Develop.Runtime.Configs.Gameplay.Levels;
 using _Project.Develop.Runtime.Configs.Gameplay.Shop;
@@ -24,7 +25,8 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
             {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"},
             {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"},
             {typeof(BombConfig), "Configs/Gameplay/Entities/BombConfig"},
-            {typeof(ShopConfig), "Configs/Gameplay/Shop/ShopConfig"}
+            {typeof(ShopConfig), "Configs/Gameplay/Shop/ShopConfig"},
+            {typeof(ExplosionAbilityConfig), "Configs/Gameplay/Abilities/ExplosionAbilityConfig"}
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resourcesAssetsLoader)
