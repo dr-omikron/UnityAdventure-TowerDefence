@@ -54,6 +54,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
             container.RegisterAsSingle(CreateGameplayPresentersFactory);
             container.RegisterAsSingle(CreateGameplayPopupService);
+            container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
         }
 
         private static DesktopInput CreateDesktopInput(DIContainer c)
@@ -158,6 +159,20 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
                 c.Resolve<ViewsFactory>(),
                 c.Resolve<ProjectPresenterFactory>(),
                 c.Resolve<GameplayUIRoot>(),
+                c.Resolve<GameplayPresentersFactory>());
+        }
+
+        private static GameplayScreenPresenter CreateGameplayScreenPresenter(DIContainer c)
+        {
+            GameplayUIRoot uiRoot = c.Resolve<GameplayUIRoot>();
+
+            GameplayScreenView view = c
+                .Resolve<ViewsFactory>()
+                .Create<GameplayScreenView>(ViewIDs.GameplayScreen, uiRoot.HUDLayer);
+
+            return new GameplayScreenPresenter(
+                view,
+                c.Resolve<ProjectPresenterFactory>(),
                 c.Resolve<GameplayPresentersFactory>());
         }
     }

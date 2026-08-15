@@ -1,8 +1,10 @@
 ﻿using _Project.Develop.Runtime.Configs.Gameplay.Shop;
 using _Project.Develop.Runtime.Gameplay.Features.Shop;
+using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using _Project.Develop.Runtime.Gameplay.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Meta.Features.Wallet;
+using _Project.Develop.Runtime.UI.CommonViews;
 using _Project.Develop.Runtime.UI.Core;
 using _Project.Develop.Runtime.UI.Gameplay.ResultPopups;
 using _Project.Develop.Runtime.UI.Gameplay.Shop;
@@ -57,6 +59,11 @@ namespace _Project.Develop.Runtime.UI.Gameplay
                 item,
                 _container.Resolve<ShopService>(),
                 _container.Resolve<WalletService>());
+        }
+
+        public StagesPresenter CreateStagesPresenter(IconTextView view)
+        {
+            return new StagesPresenter(view, _container.Resolve<StageProviderService>());
         }
     }
 }
