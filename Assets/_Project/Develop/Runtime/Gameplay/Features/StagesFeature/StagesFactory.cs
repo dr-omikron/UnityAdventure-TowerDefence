@@ -4,6 +4,7 @@ using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.Features.Enemies;
 using _Project.Develop.Runtime.Gameplay.Features.Station;
 using _Project.Develop.Runtime.Infrastructure.DI;
+using _Project.Develop.Runtime.Meta.Features.Wallet;
 
 namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
 {
@@ -25,7 +26,8 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
                         clearAllEnemiesStageConfig,
                         _container.Resolve<EnemiesFactory>(),
                         _container.Resolve<StationHolderService>().Station,
-                        _container.Resolve<EntitiesLifeContext>());
+                        _container.Resolve<EntitiesLifeContext>(),
+                        _container.Resolve<WalletService>());
 
                 default:
                     throw new ArgumentException($"Not supported stage type { stageConfig.GetType() }");

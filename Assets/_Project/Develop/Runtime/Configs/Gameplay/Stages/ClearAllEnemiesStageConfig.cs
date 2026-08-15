@@ -9,5 +9,7 @@ namespace _Project.Develop.Runtime.Configs.Gameplay.Stages
         [SerializeField] private List<EnemyItemConfig> _enemyItems;
 
         public IReadOnlyList<EnemyItemConfig> EnemyItems => _enemyItems;
+
+        [field: SerializeField, Min(0)] public int GoldReward { get; private set; } = 50;
     }
 }

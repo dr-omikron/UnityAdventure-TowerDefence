@@ -28,3 +28,4 @@ MonoBehaviour:
   - <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 66c11b4bc01d7474ca6ca491e019fe45,
       type: 2}
     <SpawnPosition>k__BackingField: {x: 100, y: 0, z: 0}
+  <GoldReward>k__BackingField: 100

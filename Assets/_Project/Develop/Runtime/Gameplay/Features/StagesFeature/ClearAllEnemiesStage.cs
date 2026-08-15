@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Project.Develop.Runtime.Configs.Gameplay.Stages;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.Features.Enemies;
+using _Project.Develop.Runtime.Meta.Features.Wallet;
 using _Project.Develop.Runtime.Utilities.Reactive;
 
 namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
@@ -13,21 +14,24 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
         private readonly ReactiveEvent _completed = new ReactiveEvent();
         private readonly EnemiesFactory _enemiesFactory;
         private readonly EntitiesLifeContext _entitiesLifeContext;
+        private readonly WalletService _walletService;
         private readonly Entity _enemiesTarget;
         private bool _inProcess;
 
         private readonly Dictionary<Entity, IDisposable> _spawnedEnemiesToRemoveReason = new Dictionary<Entity, IDisposable>();
 
         public ClearAllEnemiesStage(
-            ClearAllEnemiesStageConfig config, 
-            EnemiesFactory enemiesFactory, 
-            Entity enemiesTarget, 
-            EntitiesLifeContext entitiesLifeContext)
+            ClearAllEnemiesStageConfig config,
+            EnemiesFactory enemiesFactory,
+            Entity enemiesTarget,
+            EntitiesLifeContext entitiesLifeContext,
+            WalletService walletService)
         {
             _config = config;
             _enemiesFactory = enemiesFactory;
             _enemiesTarget = enemiesTarget;
             _entitiesLifeContext = entitiesLifeContext;
+            _walletService = walletService;
         }
 
         public IReadOnlyEvent Completed => _completed;
@@ -54,6 +58,8 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
         private void ProcessEnd()
         {
             _inProcess = false;
+
+            _walletService.Add(CurrencyType.Gold, _config.GoldReward);
             _completed.Invoke();
         }
 
