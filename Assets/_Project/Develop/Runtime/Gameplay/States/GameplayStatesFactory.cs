@@ -1,5 +1,6 @@
 ﻿using _Project.Develop.Runtime.Gameplay.Features.ExplosionAbility;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Rewards;
 using _Project.Develop.Runtime.Gameplay.Features.Shop;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using _Project.Develop.Runtime.Gameplay.Features.Station;
@@ -7,6 +8,7 @@ using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.UI.Gameplay;
 using _Project.Develop.Runtime.Utilities.Conditions;
 using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
+using _Project.Develop.Runtime.Utilities.DataManagement.DataProviders;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
 
 namespace _Project.Develop.Runtime.Gameplay.States
@@ -41,7 +43,10 @@ namespace _Project.Develop.Runtime.Gameplay.States
                 _container.Resolve<IInputService>(),
                 _container.Resolve<PurchasedEntitiesHolderService>(),
                 _container.Resolve<SingleWaveEntitiesHolderService>(),
-                _container.Resolve<GameplayPopupService>());
+                _container.Resolve<GameplayPopupService>(),
+                _container.Resolve<WinRewardService>(),
+                _container.Resolve<PlayerDataProvider>(),
+                _container.Resolve<ICoroutinesPerformer>());
         }
 
         public DefeatState CreateDefeatState()

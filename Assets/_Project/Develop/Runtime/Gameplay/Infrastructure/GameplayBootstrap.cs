@@ -7,6 +7,7 @@ using _Project.Develop.Runtime.Gameplay.Features.Station;
 using _Project.Develop.Runtime.Gameplay.States;
 using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
+using _Project.Develop.Runtime.Meta.Features.Wallet;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
 using UnityEngine;
@@ -35,6 +36,8 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
 
         public override IEnumerator Initialize()
         {
+            _container.Resolve<WalletReplenishService>().ReplenishToMinimum();
+
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _aiBrainContext = _container.Resolve<AIBrainContext>();
             _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();

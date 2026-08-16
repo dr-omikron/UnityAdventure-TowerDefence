@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Develop.Runtime.Configs.Meta.Wallet;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Meta.Features.LevelsProgression;
 using _Project.Develop.Runtime.Meta.Features.Wallet;
@@ -33,6 +34,7 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
             container.RegisterAsSingle<ILoadingScreen>(CreateStandardLoadingScreen);
             container.RegisterAsSingle(CreateSceneSwitcherService);
             container.RegisterAsSingle(CreateWalletService).NonLazy();
+            container.RegisterAsSingle(CreateWalletReplenishService);
             container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
             container.RegisterAsSingle(CreatePlayerDataProvider);
             container.RegisterAsSingle(CreatePresenterFactory);
@@ -82,6 +84,13 @@ namespace _Project.Develop.Runtime.Infrastructure.EntryPoint
                 currencies[currencyType] = new ReactiveVariable<int>();
 
             return new WalletService(currencies, c.Resolve<PlayerDataProvider>());
+        }
+
+        private static WalletReplenishService CreateWalletReplenishService(DIContainer c)
+        {
+            return new WalletReplenishService(
+                c.Resolve<ConfigsProviderService>().GetConfig<WalletReplenishConfig>(),
+                c.Resolve<WalletService>());
         }
 
         private static SaveLoadService CreateSaveLoadService(DIContainer c)

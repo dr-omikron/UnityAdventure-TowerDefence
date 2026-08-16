@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Project.Develop.Runtime.Meta.Features.Wallet;
 using _Project.Develop.Runtime.UI.CommonViews;
 using _Project.Develop.Runtime.UI.Core;
 using _Project.Develop.Runtime.UI.Gameplay.HealthBars;
@@ -8,6 +9,9 @@ namespace _Project.Develop.Runtime.UI.Gameplay
 {
     public class GameplayScreenPresenter : IPresenter
     {
+        private static readonly IReadOnlyList<CurrencyType> DisplayedCurrencies
+            = new List<CurrencyType> { CurrencyType.Gold };
+
         private readonly GameplayScreenView _gameplayScreenView;
         private readonly ProjectPresenterFactory _projectPresenterFactory;
         private readonly GameplayPresentersFactory _gameplayPresentersFactory;
@@ -47,8 +51,8 @@ namespace _Project.Develop.Runtime.UI.Gameplay
 
         private void CreateWallet()
         {
-            WalletPresenter walletPresenter =
-                _projectPresenterFactory.CreateWalletPresenter(_gameplayScreenView.WalletView);
+            WalletPresenter walletPresenter = _projectPresenterFactory
+                .CreateWalletPresenter(_gameplayScreenView.WalletView, DisplayedCurrencies);
 
             _childPresenters.Add(walletPresenter);
         }

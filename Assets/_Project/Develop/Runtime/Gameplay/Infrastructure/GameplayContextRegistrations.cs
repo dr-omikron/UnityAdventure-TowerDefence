@@ -1,10 +1,12 @@
 ﻿using _Project.Develop.Runtime.Configs.Gameplay.Levels;
+using _Project.Develop.Runtime.Configs.Gameplay.Rewards;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using _Project.Develop.Runtime.Gameplay.Features.AI;
 using _Project.Develop.Runtime.Gameplay.Features.Enemies;
 using _Project.Develop.Runtime.Gameplay.Features.ExplosionAbility;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using _Project.Develop.Runtime.Gameplay.Features.Rewards;
 using _Project.Develop.Runtime.Gameplay.Features.Sensors;
 using _Project.Develop.Runtime.Gameplay.Features.Shop;
 using _Project.Develop.Runtime.Gameplay.Features.StagesFeature;
@@ -47,6 +49,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEnemiesFactory);
             container.RegisterAsSingle(CreateStageFactory);
             container.RegisterAsSingle(CreateStageProvider);
+            container.RegisterAsSingle(CreateWinRewardService);
             container.RegisterAsSingle(CreateTurretsHolderService).NonLazy();
             container.RegisterAsSingle(CreateTurretsFactory);
             container.RegisterAsSingle(CreatePurchasedEntitiesHolderService).NonLazy();
@@ -116,6 +119,14 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             LevelsListConfig levelsListConfig = c.Resolve<ConfigsProviderService>().GetConfig<LevelsListConfig>();
             return new StageProviderService(levelsListConfig.GetBy(_inputArgs.LevelNumber),
                 c.Resolve<StagesFactory>());
+        }
+
+        private static WinRewardService CreateWinRewardService(DIContainer c)
+        {
+            return new WinRewardService(
+                c.Resolve<ConfigsProviderService>().GetConfig<WinRewardConfig>(),
+                c.Resolve<StageProviderService>(),
+                c.Resolve<WalletService>());
         }
 
         private static TurretsHolderService CreateTurretsHolderService(DIContainer c)

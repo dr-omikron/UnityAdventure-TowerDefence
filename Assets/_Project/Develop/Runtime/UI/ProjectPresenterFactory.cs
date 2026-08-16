@@ -1,4 +1,5 @@
-﻿using _Project.Develop.Runtime.Configs.Meta.Wallet;
+﻿using System.Collections.Generic;
+using _Project.Develop.Runtime.Configs.Meta.Wallet;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Meta.Features.LevelsProgression;
 using _Project.Develop.Runtime.Meta.Features.Wallet;
@@ -37,11 +38,20 @@ namespace _Project.Develop.Runtime.UI
 
         public WalletPresenter CreateWalletPresenter(IconTextListView views)
         {
+            WalletService walletService = _container.Resolve<WalletService>();
+            return CreateWalletPresenter(views, walletService.AvailableCurrencies);
+        }
+
+        public WalletPresenter CreateWalletPresenter(
+            IconTextListView views,
+            IReadOnlyList<CurrencyType> displayedCurrencies)
+        {
             return new WalletPresenter(
                 _container.Resolve<WalletService>(),
                 this,
                 _container.Resolve<ViewsFactory>(),
-                views);
+                views,
+                displayedCurrencies);
         }
 
         public TestPopupPresenter CreateTestPopupPresenter(TestPopupView view)

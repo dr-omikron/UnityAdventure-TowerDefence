@@ -1,22 +1,15 @@
-﻿using System.Collections;
-using _Project.Develop.Runtime.Gameplay.Infrastructure;
+using System.Collections;
 using _Project.Develop.Runtime.Infrastructure;
 using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Meta.Features.Wallet;
-using _Project.Develop.Runtime.Utilities.CoroutinesManagement;
-using _Project.Develop.Runtime.Utilities.DataManagement.DataProviders;
 using _Project.Develop.Runtime.Utilities.SceneManagement;
-using UnityEngine;
 
 namespace _Project.Develop.Runtime.Meta.Infrastructure
 {
     public class MainMenuBootstrap : SceneBootstrap
     {
         private DIContainer _container;
-        private WalletService _walletService;
-
-        private PlayerDataProvider _playerDataProvider;
-        private ICoroutinesPerformer _coroutinesPerformer;
+        private WalletReplenishService _walletReplenishService;
 
         public override void ProcessRegistration(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -26,9 +19,8 @@ namespace _Project.Develop.Runtime.Meta.Infrastructure
 
         public override IEnumerator Initialize()
         {
-            _walletService = _container.Resolve<WalletService>();
-            _playerDataProvider = _container.Resolve<PlayerDataProvider>();
-            _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+            _walletReplenishService = _container.Resolve<WalletReplenishService>();
+            _walletReplenishService.ReplenishToMinimum();
 
             yield break;
         }

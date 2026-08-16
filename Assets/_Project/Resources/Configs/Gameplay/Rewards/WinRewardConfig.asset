@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfe215ae38284d4a91b16457841f7c23, type: 3}
-  m_Name: StartWalletConfig
-  m_EditorClassIdentifier: 
-  _values:
+  m_Script: {fileID: 11500000, guid: d3bb0486d30b40babfedac72b17e2f82, type: 3}
+  m_Name: WinRewardConfig
+  m_EditorClassIdentifier:
+  _rewards:
   - <Type>k__BackingField: 0
-    <Value>k__BackingField: 200
+    <AmountPerWave>k__BackingField: 100
   - <Type>k__BackingField: 1
-    <Value>k__BackingField: 0
+    <AmountPerWave>k__BackingField: 1
