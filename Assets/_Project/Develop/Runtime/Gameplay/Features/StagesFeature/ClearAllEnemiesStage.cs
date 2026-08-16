@@ -72,7 +72,7 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
             }
 
             _spawnedEnemiesToRemoveReason.Clear();
-            _inProcess = true;
+            _inProcess = false;
         }
 
         public void Dispose()
@@ -81,7 +81,7 @@ namespace _Project.Develop.Runtime.Gameplay.Features.StagesFeature
                 item.Value.Dispose();
 
             _spawnedEnemiesToRemoveReason.Clear();
-            _inProcess = true;
+            _inProcess = false;
         }
 
         private void SpawnEnemies()

@@ -28,12 +28,11 @@ namespace _Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage
             {
                 Entity contactEntity = _contacts.Items[i];
 
-                if (_processedEntities.Contains(contactEntity) == false)
-                {
-                    _processedEntities.Add(contactEntity);
+                if (_processedEntities.Contains(contactEntity))
+                    continue;
 
-                    EntitiesHelper.TryTakeDamageFor(_source, contactEntity, _damage.Value);
-                }
+                if (EntitiesHelper.TryTakeDamageFor(_source, contactEntity, _damage.Value))
+                    _processedEntities.Add(contactEntity);
             }
 
             for (int i = _processedEntities.Count - 1; i >= 0; i--)
