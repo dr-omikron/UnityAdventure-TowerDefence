@@ -25,6 +25,7 @@ namespace _Project.Develop.Runtime.Utilities.ConfigsManagement
             {typeof(ShootingEnemyConfig), "Configs/Gameplay/Entities/ShootingEnemyConfig"},
             {typeof(TurretConfig), "Configs/Gameplay/Entities/TurretConfig"},
             {typeof(BombConfig), "Configs/Gameplay/Entities/BombConfig"},
+            {typeof(RadioactiveCloudConfig), "Configs/Gameplay/Entities/RadioactiveCloudConfig"},
             {typeof(ShopConfig), "Configs/Gameplay/Shop/ShopConfig"},
             {typeof(ExplosionAbilityConfig), "Configs/Gameplay/Abilities/ExplosionAbilityConfig"}
         };

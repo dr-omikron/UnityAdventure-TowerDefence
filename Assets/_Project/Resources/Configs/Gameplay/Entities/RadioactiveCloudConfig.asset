@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1b47c209fa4d63bc75e2a08d194f36, type: 3}
+  m_Name: RadioactiveCloudConfig
+  m_EditorClassIdentifier: 
+  <PrefabPath>k__BackingField: Entities/RadioactiveCloud
+  <Radius>k__BackingField: 10
+  <Damage>k__BackingField: 50
+  <DamageInterval>k__BackingField: 0.5

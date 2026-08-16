@@ -221,6 +221,9 @@ GameObject:
   - component: {fileID: 5746293031082155372}
   - component: {fileID: 8358981260531794711}
   - component: {fileID: 1107472860841921526}
+  - component: {fileID: 7523901846120375284}
+  - component: {fileID: 3196428507941630852}
+  - component: {fileID: 6087314529730148613}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -240,8 +243,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2386917642338456894}
   - {fileID: 206710404000056216}
+  - {fileID: 2386917642338456894}
   - {fileID: 6388125851636612579}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -504,3 +507,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &7523901846120375284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860849056430712388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6853cd1d0864e428ab5cd652777490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 1107472860841921526}
+  _filler: {fileID: 610608713777082788}
+--- !u!114 &3196428507941630852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860849056430712388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef27ca0782d7024da872c06450f2e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 3476160912271756079}
+  _bar: {fileID: 7523901846120375284}
+--- !u!114 &6087314529730148613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860849056430712388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5a91e7b408426fa2c6801fb75e39d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _barWithText: {fileID: 3196428507941630852}
+  _worldOffset: {x: 0, y: 5, z: 0}

@@ -1,34 +1,30 @@
 using _Project.Develop.Runtime.Configs.Gameplay.Abilities;
 using _Project.Develop.Runtime.Gameplay.EntitiesCore;
 using _Project.Develop.Runtime.Gameplay.Features.InputFeature;
-using _Project.Develop.Runtime.Infrastructure.DI;
 using _Project.Develop.Runtime.Utilities.ConfigsManagement;
+using _Project.Develop.Runtime.Utilities.Reactive;
 using UnityEngine;
 
 namespace _Project.Develop.Runtime.Gameplay.Features.ExplosionAbility
 {
-    public class ExplosionAbilityService : IInitializable
+    public class ExplosionAbilityService
     {
-        private readonly EntitiesFactory _entitiesFactory;
         private readonly FieldClickService _fieldClickService;
-        private readonly ExplosionAbilityConfig _config;
-
-        private Entity _caster;
+        private readonly Entity _caster;
 
         public ExplosionAbilityService(
             EntitiesFactory entitiesFactory,
             FieldClickService fieldClickService,
             ConfigsProviderService configsProviderService)
         {
-            _entitiesFactory = entitiesFactory;
             _fieldClickService = fieldClickService;
-            _config = configsProviderService.GetConfig<ExplosionAbilityConfig>();
+
+            ExplosionAbilityConfig config = configsProviderService.GetConfig<ExplosionAbilityConfig>();
+            _caster = entitiesFactory.CreateExplosionCaster(config);
         }
 
-        public void Initialize()
-        {
-            _caster = _entitiesFactory.CreateExplosionCaster(_config);
-        }
+        public IReadOnlyVariable<float> CooldownRemainingTime => _caster.AttackCooldownCurrentTime;
+        public float CooldownTotalTime => _caster.AttackCooldownInitialTime.Value;
 
         public void Update(float deltaTime)
         {

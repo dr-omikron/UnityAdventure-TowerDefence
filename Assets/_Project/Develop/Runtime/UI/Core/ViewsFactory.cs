@@ -21,7 +21,8 @@ namespace _Project.Develop.Runtime.UI.Core
             { ViewIDs.WinPopup, "UI/Gameplay/ResultPopup/WinPopup" },
             { ViewIDs.DefeatPopup, "UI/Gameplay/ResultPopup/DefeatPopup" },
             { ViewIDs.SimpleHealthBar, "UI/Gameplay/HealthBars/SimpleHealthBar" },
-            { ViewIDs.HeroHealthBar, "UI/Gameplay/HealthBars/HeroHealthBar" },
+            { ViewIDs.StationHealthBar, "UI/Gameplay/HealthBars/StationHealthBar" },
+            { ViewIDs.ReloadBar, "UI/Gameplay/HealthBars/HealthBar" },
             { ViewIDs.ShopPopup, "UI/Gameplay/Shop/ShopPopup" },
             { ViewIDs.ShopTile, "UI/Gameplay/Shop/ShopTile" }
         };

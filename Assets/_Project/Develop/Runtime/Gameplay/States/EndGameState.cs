@@ -8,13 +8,16 @@ namespace _Project.Develop.Runtime.Gameplay.States
     {
         private readonly IInputService _inputService;
         private readonly PurchasedEntitiesHolderService _purchasedEntitiesHolderService;
+        private readonly SingleWaveEntitiesHolderService _singleWaveEntitiesHolderService;
 
         protected EndGameState(
             IInputService inputService,
-            PurchasedEntitiesHolderService purchasedEntitiesHolderService)
+            PurchasedEntitiesHolderService purchasedEntitiesHolderService,
+            SingleWaveEntitiesHolderService singleWaveEntitiesHolderService)
         {
             _inputService = inputService;
             _purchasedEntitiesHolderService = purchasedEntitiesHolderService;
+            _singleWaveEntitiesHolderService = singleWaveEntitiesHolderService;
         }
 
         public override void Enter()
@@ -23,6 +26,7 @@ namespace _Project.Develop.Runtime.Gameplay.States
 
             _inputService.IsEnabled = false;
             _purchasedEntitiesHolderService.ReleaseAll();
+            _singleWaveEntitiesHolderService.ReleaseAll();
         }
 
         public override void Exit()

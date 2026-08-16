@@ -447,6 +447,55 @@ namespace _Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
+        public Entity CreateRadioactiveCloud(Vector3 position, RadioactiveCloudConfig radioactiveCloudConfig)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntityFactory.Create(entity, position, radioactiveCloudConfig.PrefabPath);
+
+            entity
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Station))
+
+                .AddAttackProcessInitialTime(new ReactiveVariable<float>(0))
+                .AddAttackProcessCurrentTime()
+                .AddInAttackProcess()
+                .AddStartAreaAttackRequest()
+                .AddStartAttackEvent()
+                .AddEndAttackEvent()
+                .AddAttackCooldownCurrentTime()
+                .AddAttackCooldownInitialTime(new ReactiveVariable<float>(radioactiveCloudConfig.DamageInterval))
+                .AddInAttackCooldown()
+
+                .AddCastAreaPositionEvent()
+                .AddEndCastAreaPositionEvent()
+                .AddAreaDetectingRadius(new ReactiveVariable<float>(radioactiveCloudConfig.Radius))
+                .AddAreaDetectingMask(Layers.EntityMask)
+                .AddAreaCollidersBuffer(new Buffer<Collider>(64))
+                .AddAreaEntitiesBuffer(new Buffer<Entity>(64))
+                .AddAreaDamage(new ReactiveVariable<float>(radioactiveCloudConfig.Damage));
+
+            ICompositeCondition canStartAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
+
+            entity.AddCanStartAttack(canStartAttack);
+
+            entity
+                .AddSystem(new PeriodicAreaAttackSystem())
+                .AddSystem(new StartAreaAttackSystem())
+                .AddSystem(new AttackProcessTimerSystem())
+                .AddSystem(new EndAttackSystem())
+                .AddSystem(new AttackCooldownTimerSystem())
+                .AddSystem(new AriaContactsDetectingSystem())
+                .AddSystem(new AreaCastDebugDrawSystem(Color.green))
+                .AddSystem(new AreaContactsEntitiesFilterSystem(_contactsEntitiesFilterService))
+                .AddSystem(new DealDamageOnAreaSystem());
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
         public Entity CreateExplosionCaster(ExplosionAbilityConfig explosionAbilityConfig)
         {
             Entity entity = CreateEmpty();

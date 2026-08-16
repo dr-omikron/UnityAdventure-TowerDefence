@@ -50,6 +50,7 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateTurretsHolderService).NonLazy();
             container.RegisterAsSingle(CreateTurretsFactory);
             container.RegisterAsSingle(CreatePurchasedEntitiesHolderService).NonLazy();
+            container.RegisterAsSingle(CreateSingleWaveEntitiesHolderService).NonLazy();
             container.RegisterAsSingle(CreateShopService);
             container.RegisterAsSingle(CreateFieldClickService);
             container.RegisterAsSingle(CreateFieldPlacementService);
@@ -126,6 +127,9 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
         private static PurchasedEntitiesHolderService CreatePurchasedEntitiesHolderService(DIContainer c)
             => new PurchasedEntitiesHolderService(c.Resolve<EntitiesLifeContext>());
 
+        private static SingleWaveEntitiesHolderService CreateSingleWaveEntitiesHolderService(DIContainer c)
+            => new SingleWaveEntitiesHolderService(c.Resolve<EntitiesLifeContext>());
+
         private static ShopService CreateShopService(DIContainer c)
         {
             return new ShopService(
@@ -133,7 +137,8 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
                 c.Resolve<WalletService>(),
                 c.Resolve<TurretsFactory>(),
                 c.Resolve<EntitiesFactory>(),
-                c.Resolve<PurchasedEntitiesHolderService>());
+                c.Resolve<PurchasedEntitiesHolderService>(),
+                c.Resolve<SingleWaveEntitiesHolderService>());
         }
 
         private static FieldClickService CreateFieldClickService(DIContainer c)
@@ -187,7 +192,8 @@ namespace _Project.Develop.Runtime.Gameplay.Infrastructure
             return new GameplayScreenPresenter(
                 view,
                 c.Resolve<ProjectPresenterFactory>(),
-                c.Resolve<GameplayPresentersFactory>());
+                c.Resolve<GameplayPresentersFactory>(),
+                c.Resolve<ViewsFactory>());
         }
     }
 }

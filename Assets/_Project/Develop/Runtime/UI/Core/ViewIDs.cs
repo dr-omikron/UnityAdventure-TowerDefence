@@ -11,7 +11,8 @@
         public const string WinPopup = nameof(WinPopup);
         public const string DefeatPopup = nameof(DefeatPopup);
         public const string SimpleHealthBar = nameof(SimpleHealthBar);
-        public const string HeroHealthBar = nameof(HeroHealthBar);
+        public const string StationHealthBar = nameof(StationHealthBar);
+        public const string ReloadBar = nameof(ReloadBar);
         public const string ShopPopup = nameof(ShopPopup);
         public const string ShopTile = nameof(ShopTile);
     }

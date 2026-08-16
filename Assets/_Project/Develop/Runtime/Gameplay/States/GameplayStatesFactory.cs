@@ -31,7 +31,8 @@ namespace _Project.Develop.Runtime.Gameplay.States
         {
             return new StageProcessState(
                 _container.Resolve<StageProviderService>(),
-                _container.Resolve<ExplosionAbilityService>());
+                _container.Resolve<ExplosionAbilityService>(),
+                _container.Resolve<SingleWaveEntitiesHolderService>());
         }
 
         public WinState CreateWinState()
@@ -39,6 +40,7 @@ namespace _Project.Develop.Runtime.Gameplay.States
             return new WinState(
                 _container.Resolve<IInputService>(),
                 _container.Resolve<PurchasedEntitiesHolderService>(),
+                _container.Resolve<SingleWaveEntitiesHolderService>(),
                 _container.Resolve<GameplayPopupService>());
         }
 
@@ -47,6 +49,7 @@ namespace _Project.Develop.Runtime.Gameplay.States
             return new DefeatState(
                 _container.Resolve<IInputService>(),
                 _container.Resolve<PurchasedEntitiesHolderService>(),
+                _container.Resolve<SingleWaveEntitiesHolderService>(),
                 _container.Resolve<GameplayPopupService>());
         }
 

@@ -12,8 +12,9 @@ namespace _Project.Develop.Runtime.Gameplay.States
         public DefeatState(
             IInputService inputService,
             PurchasedEntitiesHolderService purchasedEntitiesHolderService,
+            SingleWaveEntitiesHolderService singleWaveEntitiesHolderService,
             GameplayPopupService popupService)
-            : base(inputService, purchasedEntitiesHolderService)
+            : base(inputService, purchasedEntitiesHolderService, singleWaveEntitiesHolderService)
         {
             _popupService = popupService;
         }

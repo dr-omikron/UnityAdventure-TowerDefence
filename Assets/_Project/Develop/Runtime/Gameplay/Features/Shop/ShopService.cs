@@ -17,26 +17,30 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Shop
         private readonly TurretsFactory _turretsFactory;
         private readonly EntitiesFactory _entitiesFactory;
         private readonly PurchasedEntitiesHolderService _purchasedEntitiesHolderService;
+        private readonly SingleWaveEntitiesHolderService _singleWaveEntitiesHolderService;
 
         public ShopService(
             ConfigsProviderService configsProviderService,
             WalletService walletService,
             TurretsFactory turretsFactory,
             EntitiesFactory entitiesFactory,
-            PurchasedEntitiesHolderService purchasedEntitiesHolderService)
+            PurchasedEntitiesHolderService purchasedEntitiesHolderService,
+            SingleWaveEntitiesHolderService singleWaveEntitiesHolderService)
         {
             _shopConfig = configsProviderService.GetConfig<ShopConfig>();
             _walletService = walletService;
             _turretsFactory = turretsFactory;
             _entitiesFactory = entitiesFactory;
             _purchasedEntitiesHolderService = purchasedEntitiesHolderService;
+            _singleWaveEntitiesHolderService = singleWaveEntitiesHolderService;
         }
 
         public IReadOnlyList<ShopItemConfig> Items => _shopConfig.Items;
 
         public bool CanBuy(ShopItemConfig item) => _walletService.Enough(item.CurrencyType, item.Cost);
 
-        public bool NeedsFieldPlacement(ShopItemConfig item) => item.EntityConfig is BombConfig;
+        public bool NeedsFieldPlacement(ShopItemConfig item)
+            => item.EntityConfig is BombConfig or RadioactiveCloudConfig;
 
         public bool TryBuy(ShopItemConfig item)
         {
@@ -56,15 +60,27 @@ namespace _Project.Develop.Runtime.Gameplay.Features.Shop
 
         public bool TryBuyAt(ShopItemConfig item, Vector3 position)
         {
-            if (item.EntityConfig is not BombConfig bombConfig)
+            if (NeedsFieldPlacement(item) == false)
                 throw new ArgumentException($"Item { item.Title } does not support field placement");
 
             if (CanBuy(item) == false)
                 return false;
 
-            Entity bomb = _entitiesFactory.CreateBomb(position, bombConfig);
+            switch (item.EntityConfig)
+            {
+                case BombConfig bombConfig:
+                    _purchasedEntitiesHolderService.Add(_entitiesFactory.CreateBomb(position, bombConfig));
+                    break;
 
-            _purchasedEntitiesHolderService.Add(bomb);
+                case RadioactiveCloudConfig radioactiveCloudConfig:
+                    _singleWaveEntitiesHolderService.Add(
+                        _entitiesFactory.CreateRadioactiveCloud(position, radioactiveCloudConfig));
+                    break;
+
+                default:
+                    throw new ArgumentException($"Not supported placeable config { item.EntityConfig.GetType() }");
+            }
+
             _walletService.Spend(item.CurrencyType, item.Cost);
 
             return true;
